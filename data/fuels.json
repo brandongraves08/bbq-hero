@@ -1,0 +1,211 @@
+[
+  {
+    "id": "kingsford_briquettes",
+    "name": "Kingsford Charcoal Briquettes",
+    "type": "charcoal_briquette",
+    "burnTempC": 400,
+    "burnDurationMin": 60,
+    "smokeStrength": 2,
+    "smokeFlavorProfile": ["neutral", "smoky"],
+    "dirtySmokeRisk": 0.3,
+    "costPerKg": 1.5,
+    "compatibleCookerTypes": ["offset_smoker", "charcoal_kettle", "kamado", "drum_smoker"],
+    "qualityGrades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "burnConsistency": 0.6},
+      {"name": "Professional", "priceMultiplier": 1.3, "burnConsistency": 0.8}
+    ]
+  },
+  {
+    "id": "lump_oak",
+    "name": "Oak Lump Charcoal",
+    "type": "charcoal_lump",
+    "burnTempC": 480,
+    "burnDurationMin": 90,
+    "smokeStrength": 3,
+    "smokeFlavorProfile": ["oak", "smoky", "earthy"],
+    "dirtySmokeRisk": 0.15,
+    "costPerKg": 2.5,
+    "compatibleCookerTypes": ["offset_smoker", "charcoal_kettle", "kamado", "drum_smoker"],
+    "qualityGrades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "burnConsistency": 0.7},
+      {"name": "Premium", "priceMultiplier": 1.5, "burnConsistency": 0.9}
+    ]
+  },
+  {
+    "id": "lump_mesquite",
+    "name": "Mesquite Lump Charcoal",
+    "type": "charcoal_lump",
+    "burnTempC": 520,
+    "burnDurationMin": 75,
+    "smokeStrength": 4,
+    "smokeFlavorProfile": ["mesquite", "bold", "earthy"],
+    "dirtySmokeRisk": 0.25,
+    "costPerKg": 3.0,
+    "compatibleCookerTypes": ["offset_smoker", "charcoal_kettle", "kamado", "drum_smoker"],
+    "qualityGrades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "burnConsistency": 0.65},
+      {"name": "Premium", "priceMultiplier": 1.5, "burnConsistency": 0.85}
+    ]
+  },
+  {
+    "id": "hickory_splits",
+    "name": "Hickory Wood Splits",
+    "type": "wood_split",
+    "burnTempC": 450,
+    "burnDurationMin": 120,
+    "smokeStrength": 5,
+    "smokeFlavorProfile": ["hickory", "bacon-like", "strong", "earthy"],
+    "dirtySmokeRisk": 0.35,
+    "costPerKg": 2.0,
+    "compatibleCookerTypes": ["offset_smoker", "brick_pit"],
+    "qualityGrades": [
+      {"name": "Green", "priceMultiplier": 0.7, "burnConsistency": 0.4},
+      {"name": "Seasoned", "priceMultiplier": 1.0, "burnConsistency": 0.7},
+      {"name": "Kiln-dried", "priceMultiplier": 1.4, "burnConsistency": 0.9}
+    ]
+  },
+  {
+    "id": "oak_splits",
+    "name": "Oak Wood Splits",
+    "type": "wood_split",
+    "burnTempC": 430,
+    "burnDurationMin": 130,
+    "smokeStrength": 4,
+    "smokeFlavorProfile": ["oak", "earthy", "balanced"],
+    "dirtySmokeRisk": 0.25,
+    "costPerKg": 1.8,
+    "compatibleCookerTypes": ["offset_smoker", "brick_pit"],
+    "qualityGrades": [
+      {"name": "Green", "priceMultiplier": 0.7, "burnConsistency": 0.4},
+      {"name": "Seasoned", "priceMultiplier": 1.0, "burnConsistency": 0.7},
+      {"name": "Kiln-dried", "priceMultiplier": 1.4, "burnConsistency": 0.9}
+    ]
+  },
+  {
+    "id": "pecan_splits",
+    "name": "Pecan Wood Splits",
+    "type": "wood_split",
+    "burnTempC": 440,
+    "burnDurationMin": 110,
+    "smokeStrength": 3,
+    "smokeFlavorProfile": ["pecan", "sweet", "nutty", "mild"],
+    "dirtySmokeRisk": 0.2,
+    "costPerKg": 2.5,
+    "compatibleCookerTypes": ["offset_smoker", "brick_pit"],
+    "qualityGrades": [
+      {"name": "Seasoned", "priceMultiplier": 1.0, "burnConsistency": 0.7},
+      {"name": "Kiln-dried", "priceMultiplier": 1.3, "burnConsistency": 0.9}
+    ]
+  },
+  {
+    "id": "mesquite_splits",
+    "name": "Mesquite Wood Splits",
+    "type": "wood_split",
+    "burnTempC": 500,
+    "burnDurationMin": 100,
+    "smokeStrength": 5,
+    "smokeFlavorProfile": ["mesquite", "bold", "spicy", "intense"],
+    "dirtySmokeRisk": 0.4,
+    "costPerKg": 2.2,
+    "compatibleCookerTypes": ["offset_smoker", "brick_pit"],
+    "qualityGrades": [
+      {"name": "Seasoned", "priceMultiplier": 1.0, "burnConsistency": 0.65},
+      {"name": "Kiln-dried", "priceMultiplier": 1.3, "burnConsistency": 0.85}
+    ]
+  },
+  {
+    "id": "cherry_splits",
+    "name": "Cherry Wood Splits",
+    "type": "wood_split",
+    "burnTempC": 410,
+    "burnDurationMin": 115,
+    "smokeStrength": 2,
+    "smokeFlavorProfile": ["cherry", "sweet", "fruity", "mild"],
+    "dirtySmokeRisk": 0.15,
+    "costPerKg": 3.0,
+    "compatibleCookerTypes": ["offset_smoker", "brick_pit"],
+    "qualityGrades": [
+      {"name": "Seasoned", "priceMultiplier": 1.0, "burnConsistency": 0.75},
+      {"name": "Kiln-dried", "priceMultiplier": 1.3, "burnConsistency": 0.9}
+    ]
+  },
+  {
+    "id": "apple_splits",
+    "name": "Apple Wood Splits",
+    "type": "wood_split",
+    "burnTempC": 400,
+    "burnDurationMin": 120,
+    "smokeStrength": 2,
+    "smokeFlavorProfile": ["apple", "sweet", "fruity", "delicate"],
+    "dirtySmokeRisk": 0.1,
+    "costPerKg": 3.5,
+    "compatibleCookerTypes": ["offset_smoker", "brick_pit"],
+    "qualityGrades": [
+      {"name": "Seasoned", "priceMultiplier": 1.0, "burnConsistency": 0.75},
+      {"name": "Kiln-dried", "priceMultiplier": 1.3, "burnConsistency": 0.9}
+    ]
+  },
+  {
+    "id": "competition_pellets",
+    "name": "Competition Blend Pellets",
+    "type": "pellet",
+    "burnTempC": 420,
+    "burnDurationMin": 90,
+    "smokeStrength": 3,
+    "smokeFlavorProfile": ["hickory", "oak", "cherry", "maple"],
+    "dirtySmokeRisk": 0.1,
+    "costPerKg": 2.0,
+    "compatibleCookerTypes": ["pellet_smoker", "commercial_rotisserie"],
+    "qualityGrades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "burnConsistency": 0.8},
+      {"name": "Gourmet", "priceMultiplier": 1.4, "burnConsistency": 0.95}
+    ]
+  },
+  {
+    "id": "hickory_pellets",
+    "name": "Hickory Pellets",
+    "type": "pellet",
+    "burnTempC": 430,
+    "burnDurationMin": 85,
+    "smokeStrength": 4,
+    "smokeFlavorProfile": ["hickory", "bold", "earthy"],
+    "dirtySmokeRisk": 0.15,
+    "costPerKg": 1.8,
+    "compatibleCookerTypes": ["pellet_smoker", "commercial_rotisserie"],
+    "qualityGrades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "burnConsistency": 0.75},
+      {"name": "Gourmet", "priceMultiplier": 1.4, "burnConsistency": 0.9}
+    ]
+  },
+  {
+    "id": "oak_pellets",
+    "name": "Oak Pellets",
+    "type": "pellet",
+    "burnTempC": 420,
+    "burnDurationMin": 90,
+    "smokeStrength": 3,
+    "smokeFlavorProfile": ["oak", "balanced", "mild"],
+    "dirtySmokeRisk": 0.1,
+    "costPerKg": 1.5,
+    "compatibleCookerTypes": ["pellet_smoker", "commercial_rotisserie"],
+    "qualityGrades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "burnConsistency": 0.8},
+      {"name": "Gourmet", "priceMultiplier": 1.4, "burnConsistency": 0.95}
+    ]
+  },
+  {
+    "id": "propane",
+    "name": "Propane Gas",
+    "type": "propane",
+    "burnTempC": 550,
+    "burnDurationMin": 300,
+    "smokeStrength": 0,
+    "smokeFlavorProfile": ["none"],
+    "dirtySmokeRisk": 0.0,
+    "costPerKg": 1.0,
+    "compatibleCookerTypes": ["gas_grill", "commercial_rotisserie"],
+    "qualityGrades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "burnConsistency": 1.0}
+    ]
+  }
+]

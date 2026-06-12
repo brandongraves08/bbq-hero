@@ -1,0 +1,429 @@
+[
+  {
+    "id": "texas_spg_rub",
+    "name": "Texas SPG Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Coarse Salt", "amount": 2, "unit": "tbsp"},
+      {"name": "Black Pepper (16 mesh)", "amount": 2, "unit": "tbsp"},
+      {"name": "Garlic Granules", "amount": 1, "unit": "tbsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 1,
+    "flavorProfile": ["peppery", "savory", "classic"],
+    "bestForMeats": ["brisket", "beef"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 0},
+    "costPerBatch": 1.5,
+    "yieldAmount": 5
+  },
+  {
+    "id": "kc_sweet_rub",
+    "name": "Kansas City Sweet Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Brown Sugar", "amount": 3, "unit": "tbsp"},
+      {"name": "Paprika", "amount": 2, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tsp"},
+      {"name": "Onion Powder", "amount": 1, "unit": "tsp"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tsp"},
+      {"name": "Chili Powder", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 1,
+    "flavorProfile": ["sweet", "smoky", "balanced"],
+    "bestForMeats": ["pork", "chicken"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 10},
+    "costPerBatch": 2.0,
+    "yieldAmount": 8
+  },
+  {
+    "id": "memphis_dry_rub",
+    "name": "Memphis Dry Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Paprika", "amount": 3, "unit": "tbsp"},
+      {"name": "Brown Sugar", "amount": 2, "unit": "tbsp"},
+      {"name": "Salt", "amount": 1, "unit": "tbsp"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tsp"},
+      {"name": "Onion Powder", "amount": 1, "unit": "tsp"},
+      {"name": "Cayenne", "amount": 0.5, "unit": "tsp"},
+      {"name": "Celery Salt", "amount": 0.5, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 2,
+    "flavorProfile": ["smoky", "spicy", "complex"],
+    "bestForMeats": ["pork", "chicken"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 20},
+    "costPerBatch": 2.5,
+    "yieldAmount": 10
+  },
+  {
+    "id": "cajun_rub",
+    "name": "Cajun Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Paprika", "amount": 2, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Onion Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Cayenne", "amount": 1, "unit": "tsp"},
+      {"name": "Oregano", "amount": 1, "unit": "tsp"},
+      {"name": "Thyme", "amount": 1, "unit": "tsp"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"},
+      {"name": "White Pepper", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 2,
+    "flavorProfile": ["spicy", "herbal", "intense"],
+    "bestForMeats": ["chicken", "sausage", "pork"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 35},
+    "costPerBatch": 2.5,
+    "yieldAmount": 8
+  },
+  {
+    "id": "competition_rub",
+    "name": "Competition Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Brown Sugar", "amount": 4, "unit": "tbsp"},
+      {"name": "White Sugar", "amount": 2, "unit": "tbsp"},
+      {"name": "Paprika", "amount": 2, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Onion Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Salt", "amount": 1, "unit": "tbsp"},
+      {"name": "MSG", "amount": 1, "unit": "tsp"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tsp"},
+      {"name": "Chili Powder", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 3,
+    "flavorProfile": ["sweet", "savory", "competition", "complex"],
+    "bestForMeats": ["brisket", "pork", "chicken"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 50},
+    "costPerBatch": 3.0,
+    "yieldAmount": 12
+  },
+  {
+    "id": "lemon_pepper_rub",
+    "name": "Lemon Pepper Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Black Pepper (coarse)", "amount": 2, "unit": "tbsp"},
+      {"name": "Lemon Zest (dried)", "amount": 2, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"},
+      {"name": "Sugar", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 1,
+    "flavorProfile": ["citrus", "peppery", "bright"],
+    "bestForMeats": ["chicken", "sausage"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 15},
+    "costPerBatch": 2.0,
+    "yieldAmount": 6
+  },
+  {
+    "id": "garlic_herb_rub",
+    "name": "Garlic Herb Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Garlic Powder", "amount": 2, "unit": "tbsp"},
+      {"name": "Dried Rosemary", "amount": 1, "unit": "tbsp"},
+      {"name": "Dried Thyme", "amount": 1, "unit": "tbsp"},
+      {"name": "Dried Basil", "amount": 1, "unit": "tbsp"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 1,
+    "flavorProfile": ["herbal", "savory", "mediterranean"],
+    "bestForMeats": ["chicken", "sausage"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 5},
+    "costPerBatch": 2.0,
+    "yieldAmount": 6
+  },
+  {
+    "id": "coffee_chili_rub",
+    "name": "Coffee Chili Rub",
+    "type": "rub",
+    "ingredients": [
+      {"name": "Finely Ground Coffee", "amount": 2, "unit": "tbsp"},
+      {"name": "Chili Powder", "amount": 2, "unit": "tbsp"},
+      {"name": "Brown Sugar", "amount": 2, "unit": "tbsp"},
+      {"name": "Salt", "amount": 1, "unit": "tbsp"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tsp"},
+      {"name": "Cocoa Powder", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 3,
+    "flavorProfile": ["earthy", "rich", "spicy", "deep"],
+    "bestForMeats": ["brisket", "beef"],
+    "unlockCondition": {"phase": 2, "reputationRequired": 100},
+    "costPerBatch": 3.0,
+    "yieldAmount": 8
+  },
+  {
+    "id": "kc_sweet_sauce",
+    "name": "Kansas City Sweet BBQ Sauce",
+    "type": "sauce",
+    "ingredients": [
+      {"name": "Ketchup", "amount": 2, "unit": "cups"},
+      {"name": "Brown Sugar", "amount": 0.5, "unit": "cup"},
+      {"name": "Apple Cider Vinegar", "amount": 0.25, "unit": "cup"},
+      {"name": "Worcestershire", "amount": 2, "unit": "tbsp"},
+      {"name": "Molasses", "amount": 2, "unit": "tbsp"},
+      {"name": "Mustard", "amount": 1, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tsp"},
+      {"name": "Smoked Paprika", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 15,
+    "difficulty": 2,
+    "flavorProfile": ["sweet", "tomato", "smoky", "classic"],
+    "bestForMeats": ["pork", "chicken", "brisket"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 10},
+    "costPerBatch": 4.0,
+    "yieldAmount": 16
+  },
+  {
+    "id": "carolina_vinegar_sauce",
+    "name": "Carolina Vinegar Sauce",
+    "type": "sauce",
+    "ingredients": [
+      {"name": "Apple Cider Vinegar", "amount": 1, "unit": "cup"},
+      {"name": "White Vinegar", "amount": 1, "unit": "cup"},
+      {"name": "Brown Sugar", "amount": 2, "unit": "tbsp"},
+      {"name": "Red Pepper Flakes", "amount": 1, "unit": "tsp"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 10,
+    "difficulty": 1,
+    "flavorProfile": ["tangy", "vinegary", "spicy", "thin"],
+    "bestForMeats": ["pork"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 15},
+    "costPerBatch": 2.0,
+    "yieldAmount": 16
+  },
+  {
+    "id": "alabama_white_sauce",
+    "name": "Alabama White Sauce",
+    "type": "sauce",
+    "ingredients": [
+      {"name": "Mayonnaise", "amount": 1.5, "unit": "cups"},
+      {"name": "Apple Cider Vinegar", "amount": 0.25, "unit": "cup"},
+      {"name": "Lemon Juice", "amount": 2, "unit": "tbsp"},
+      {"name": "Horseradish", "amount": 1, "unit": "tbsp"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tsp"},
+      {"name": "Salt", "amount": 0.5, "unit": "tsp"},
+      {"name": "Cayenne", "amount": 0.5, "unit": "tsp"}
+    ],
+    "prepTimeMin": 10,
+    "difficulty": 1,
+    "flavorProfile": ["creamy", "tangy", "peppery", "unique"],
+    "bestForMeats": ["chicken"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 25},
+    "costPerBatch": 3.5,
+    "yieldAmount": 12
+  },
+  {
+    "id": "texas_mop_sauce",
+    "name": "Texas Mop Sauce",
+    "type": "sauce",
+    "ingredients": [
+      {"name": "Beef Broth", "amount": 2, "unit": "cups"},
+      {"name": "Worcestershire", "amount": 0.25, "unit": "cup"},
+      {"name": "Apple Cider Vinegar", "amount": 0.25, "unit": "cup"},
+      {"name": "Butter", "amount": 2, "unit": "tbsp"},
+      {"name": "Garlic (minced)", "amount": 4, "unit": "cloves"},
+      {"name": "Black Pepper", "amount": 1, "unit": "tbsp"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 20,
+    "difficulty": 2,
+    "flavorProfile": ["savory", "peppery", "buttery", "beefy"],
+    "bestForMeats": ["brisket", "beef"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 30},
+    "costPerBatch": 4.0,
+    "yieldAmount": 16
+  },
+  {
+    "id": "spicy_competition_sauce",
+    "name": "Spicy Competition Sauce",
+    "type": "sauce",
+    "ingredients": [
+      {"name": "Ketchup", "amount": 1.5, "unit": "cups"},
+      {"name": "Brown Sugar", "amount": 0.5, "unit": "cup"},
+      {"name": "Apple Cider Vinegar", "amount": 0.25, "unit": "cup"},
+      {"name": "Chipotle Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Cayenne", "amount": 1, "unit": "tsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tsp"},
+      {"name": "Honey", "amount": 2, "unit": "tbsp"},
+      {"name": "Liquid Smoke", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 15,
+    "difficulty": 3,
+    "flavorProfile": ["spicy", "sweet", "smoky", "complex"],
+    "bestForMeats": ["pork", "chicken", "brisket"],
+    "unlockCondition": {"phase": 2, "reputationRequired": 100},
+    "costPerBatch": 4.5,
+    "yieldAmount": 14
+  },
+  {
+    "id": "mustard_sauce",
+    "name": "South Carolina Mustard Sauce",
+    "type": "sauce",
+    "ingredients": [
+      {"name": "Yellow Mustard", "amount": 1, "unit": "cup"},
+      {"name": "Brown Sugar", "amount": 0.25, "unit": "cup"},
+      {"name": "Apple Cider Vinegar", "amount": 0.25, "unit": "cup"},
+      {"name": "Honey", "amount": 2, "unit": "tbsp"},
+      {"name": "Worcestershire", "amount": 1, "unit": "tbsp"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tsp"},
+      {"name": "White Pepper", "amount": 0.5, "unit": "tsp"}
+    ],
+    "prepTimeMin": 10,
+    "difficulty": 1,
+    "flavorProfile": ["tangy", "mustardy", "sweet", "creamy"],
+    "bestForMeats": ["pork", "chicken"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 20},
+    "costPerBatch": 3.0,
+    "yieldAmount": 10
+  },
+  {
+    "id": "simple_salt_brine",
+    "name": "Simple Salt Brine",
+    "type": "brine",
+    "ingredients": [
+      {"name": "Water", "amount": 4, "unit": "cups"},
+      {"name": "Salt", "amount": 0.25, "unit": "cup"},
+      {"name": "Sugar", "amount": 0.25, "unit": "cup"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 1,
+    "flavorProfile": ["salty", "basic"],
+    "bestForMeats": ["chicken", "pork"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 0},
+    "costPerBatch": 0.5,
+    "yieldAmount": 4
+  },
+  {
+    "id": "brown_sugar_brine",
+    "name": "Brown Sugar Brine",
+    "type": "brine",
+    "ingredients": [
+      {"name": "Water", "amount": 4, "unit": "cups"},
+      {"name": "Brown Sugar", "amount": 0.5, "unit": "cup"},
+      {"name": "Salt", "amount": 0.25, "unit": "cup"},
+      {"name": "Black Peppercorns", "amount": 1, "unit": "tbsp"},
+      {"name": "Bay Leaves", "amount": 2, "unit": "leaves"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 2,
+    "flavorProfile": ["sweet", "savory", "spiced"],
+    "bestForMeats": ["pork", "chicken"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 20},
+    "costPerBatch": 1.5,
+    "yieldAmount": 4
+  },
+  {
+    "id": "apple_cider_brine",
+    "name": "Apple Cider Brine",
+    "type": "brine",
+    "ingredients": [
+      {"name": "Apple Cider", "amount": 2, "unit": "cups"},
+      {"name": "Water", "amount": 2, "unit": "cups"},
+      {"name": "Brown Sugar", "amount": 0.25, "unit": "cup"},
+      {"name": "Salt", "amount": 0.25, "unit": "cup"},
+      {"name": "Cinnamon Stick", "amount": 1, "unit": "stick"},
+      {"name": "Thyme (fresh)", "amount": 3, "unit": "sprigs"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 3,
+    "flavorProfile": ["fruity", "sweet", "spiced", "autumnal"],
+    "bestForMeats": ["chicken", "pork"],
+    "unlockCondition": {"phase": 2, "reputationRequired": 80},
+    "costPerBatch": 3.0,
+    "yieldAmount": 4
+  },
+  {
+    "id": "mojo_criollo_marinade",
+    "name": "Mojo Criollo Marinade",
+    "type": "marinade",
+    "ingredients": [
+      {"name": "Orange Juice (sour)", "amount": 0.5, "unit": "cup"},
+      {"name": "Lime Juice", "amount": 0.25, "unit": "cup"},
+      {"name": "Garlic (minced)", "amount": 6, "unit": "cloves"},
+      {"name": "Cumin", "amount": 1, "unit": "tsp"},
+      {"name": "Oregano", "amount": 1, "unit": "tsp"},
+      {"name": "Olive Oil", "amount": 0.25, "unit": "cup"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 10,
+    "difficulty": 2,
+    "flavorProfile": ["citrus", "garlicky", "cuban", "tangy"],
+    "bestForMeats": ["chicken", "pork"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 30},
+    "costPerBatch": 3.0,
+    "yieldAmount": 6
+  },
+  {
+    "id": "beer_can_marinade",
+    "name": "Beer Can Marinade",
+    "type": "marinade",
+    "ingredients": [
+      {"name": "Beer (lager)", "amount": 1, "unit": "can"},
+      {"name": "Garlic Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Onion Powder", "amount": 1, "unit": "tbsp"},
+      {"name": "Paprika", "amount": 1, "unit": "tbsp"},
+      {"name": "Brown Sugar", "amount": 1, "unit": "tbsp"},
+      {"name": "Salt", "amount": 1, "unit": "tsp"}
+    ],
+    "prepTimeMin": 5,
+    "difficulty": 1,
+    "flavorProfile": ["malty", "savory", "classic"],
+    "bestForMeats": ["chicken"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 5},
+    "costPerBatch": 2.0,
+    "yieldAmount": 4
+  },
+  {
+    "id": "honey_chipotle_glaze",
+    "name": "Honey Chipotle Glaze",
+    "type": "glaze",
+    "ingredients": [
+      {"name": "Honey", "amount": 0.5, "unit": "cup"},
+      {"name": "Chipotle Pepper (adobo)", "amount": 2, "unit": "tbsp"},
+      {"name": "Butter", "amount": 2, "unit": "tbsp"},
+      {"name": "Lime Juice", "amount": 1, "unit": "tbsp"},
+      {"name": "Garlic (minced)", "amount": 2, "unit": "cloves"}
+    ],
+    "prepTimeMin": 10,
+    "difficulty": 2,
+    "flavorProfile": ["sweet", "spicy", "smoky", "sticky"],
+    "bestForMeats": ["chicken", "pork"],
+    "unlockCondition": {"phase": 1, "reputationRequired": 40},
+    "costPerBatch": 4.0,
+    "yieldAmount": 6
+  },
+  {
+    "id": "bourbon_brown_sugar_glaze",
+    "name": "Bourbon Brown Sugar Glaze",
+    "type": "glaze",
+    "ingredients": [
+      {"name": "Bourbon", "amount": 0.25, "unit": "cup"},
+      {"name": "Brown Sugar", "amount": 0.5, "unit": "cup"},
+      {"name": "Butter", "amount": 3, "unit": "tbsp"},
+      {"name": "Vanilla Extract", "amount": 1, "unit": "tsp"},
+      {"name": "Cinnamon", "amount": 0.5, "unit": "tsp"}
+    ],
+    "prepTimeMin": 10,
+    "difficulty": 3,
+    "flavorProfile": ["bourbon", "sweet", "buttery", "rich"],
+    "bestForMeats": ["pork", "brisket"],
+    "unlockCondition": {"phase": 2, "reputationRequired": 120},
+    "costPerBatch": 6.0,
+    "yieldAmount": 6
+  }
+]

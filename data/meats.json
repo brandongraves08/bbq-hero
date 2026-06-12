@@ -1,0 +1,337 @@
+[
+  {
+    "id": "packer_brisket",
+    "name": "Packer Brisket (Whole)",
+    "category": "brisket",
+    "weightRangeKg": [5.0, 9.0],
+    "idealCookTempC": 107,
+    "idealInternalTempC": 95,
+    "stallTempC": 68,
+    "stallDurationMin": 120,
+    "barkPotential": 0.9,
+    "moistureSensitivity": 0.6,
+    "smokeAbsorption": 0.8,
+    "restingMin": 60,
+    "yieldPercent": 0.60,
+    "difficulty": 5,
+    "grades": [
+      {"name": "Select", "priceMultiplier": 1.0, "minMarbling": 0.2},
+      {"name": "Choice", "priceMultiplier": 1.3, "minMarbling": 0.4},
+      {"name": "Prime", "priceMultiplier": 1.8, "minMarbling": 0.6},
+      {"name": "Wagyu", "priceMultiplier": 3.0, "minMarbling": 0.8}
+    ],
+    "prepSteps": [
+      {"name": "trim_fat_cap", "difficulty": 4},
+      {"name": "remove_silverskin", "difficulty": 3},
+      {"name": "apply_rub", "difficulty": 2}
+    ]
+  },
+  {
+    "id": "flat_brisket",
+    "name": "Brisket Flat",
+    "category": "brisket",
+    "weightRangeKg": [2.5, 4.5],
+    "idealCookTempC": 107,
+    "idealInternalTempC": 93,
+    "stallTempC": 68,
+    "stallDurationMin": 90,
+    "barkPotential": 0.7,
+    "moistureSensitivity": 0.8,
+    "smokeAbsorption": 0.7,
+    "restingMin": 45,
+    "yieldPercent": 0.55,
+    "difficulty": 4,
+    "grades": [
+      {"name": "Select", "priceMultiplier": 1.0, "minMarbling": 0.2},
+      {"name": "Choice", "priceMultiplier": 1.3, "minMarbling": 0.4},
+      {"name": "Prime", "priceMultiplier": 1.8, "minMarbling": 0.6}
+    ],
+    "prepSteps": [
+      {"name": "trim_fat_cap", "difficulty": 3},
+      {"name": "apply_rub", "difficulty": 2}
+    ]
+  },
+  {
+    "id": "pork_shoulder",
+    "name": "Pork Shoulder / Boston Butt",
+    "category": "pork",
+    "weightRangeKg": [3.0, 5.5],
+    "idealCookTempC": 107,
+    "idealInternalTempC": 93,
+    "stallTempC": 70,
+    "stallDurationMin": 90,
+    "barkPotential": 0.8,
+    "moistureSensitivity": 0.4,
+    "smokeAbsorption": 0.7,
+    "restingMin": 45,
+    "yieldPercent": 0.65,
+    "difficulty": 3,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.3}
+    ],
+    "prepSteps": [
+      {"name": "trim_excess_fat", "difficulty": 2},
+      {"name": "apply_rub", "difficulty": 2},
+      {"name": "rest_after_rub", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "spare_ribs",
+    "name": "Spare Ribs (Full Rack)",
+    "category": "pork",
+    "weightRangeKg": [1.8, 2.7],
+    "idealCookTempC": 110,
+    "idealInternalTempC": 88,
+    "stallTempC": 70,
+    "stallDurationMin": 30,
+    "barkPotential": 0.7,
+    "moistureSensitivity": 0.5,
+    "smokeAbsorption": 0.6,
+    "restingMin": 15,
+    "yieldPercent": 0.70,
+    "difficulty": 3,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.3}
+    ],
+    "prepSteps": [
+      {"name": "remove_membrane", "difficulty": 2},
+      {"name": "trim_excess_fat", "difficulty": 2},
+      {"name": "apply_rub", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "st_louis_ribs",
+    "name": "St. Louis Style Ribs",
+    "category": "pork",
+    "weightRangeKg": [1.5, 2.3],
+    "idealCookTempC": 110,
+    "idealInternalTempC": 88,
+    "stallTempC": 70,
+    "stallDurationMin": 25,
+    "barkPotential": 0.75,
+    "moistureSensitivity": 0.5,
+    "smokeAbsorption": 0.65,
+    "restingMin": 15,
+    "yieldPercent": 0.75,
+    "difficulty": 3,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.3}
+    ],
+    "prepSteps": [
+      {"name": "remove_membrane", "difficulty": 2},
+      {"name": "trim_rectangular", "difficulty": 3},
+      {"name": "apply_rub", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "baby_back_ribs",
+    "name": "Baby Back Ribs",
+    "category": "pork",
+    "weightRangeKg": [1.0, 1.6],
+    "idealCookTempC": 110,
+    "idealInternalTempC": 85,
+    "stallTempC": 68,
+    "stallDurationMin": 20,
+    "barkPotential": 0.6,
+    "moistureSensitivity": 0.6,
+    "smokeAbsorption": 0.5,
+    "restingMin": 10,
+    "yieldPercent": 0.72,
+    "difficulty": 2,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.3}
+    ],
+    "prepSteps": [
+      {"name": "remove_membrane", "difficulty": 1},
+      {"name": "apply_rub", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "whole_chicken",
+    "name": "Whole Chicken",
+    "category": "chicken",
+    "weightRangeKg": [1.5, 2.5],
+    "idealCookTempC": 120,
+    "idealInternalTempC": 74,
+    "stallTempC": 60,
+    "stallDurationMin": 0,
+    "barkPotential": 0.4,
+    "moistureSensitivity": 0.7,
+    "smokeAbsorption": 0.3,
+    "restingMin": 15,
+    "yieldPercent": 0.65,
+    "difficulty": 3,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.2}
+    ],
+    "prepSteps": [
+      {"name": "spatchcock_or_truss", "difficulty": 3},
+      {"name": "dry_brine", "difficulty": 2},
+      {"name": "apply_rub", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "chicken_thighs",
+    "name": "Chicken Thighs",
+    "category": "chicken",
+    "weightRangeKg": [0.5, 1.0],
+    "idealCookTempC": 120,
+    "idealInternalTempC": 77,
+    "stallTempC": 60,
+    "stallDurationMin": 0,
+    "barkPotential": 0.5,
+    "moistureSensitivity": 0.5,
+    "smokeAbsorption": 0.3,
+    "restingMin": 10,
+    "yieldPercent": 0.85,
+    "difficulty": 2,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.2}
+    ],
+    "prepSteps": [
+      {"name": "trim_excess_skin", "difficulty": 1},
+      {"name": "apply_rub_or_brine", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "chicken_wings",
+    "name": "Chicken Wings",
+    "category": "chicken",
+    "weightRangeKg": [0.3, 0.6],
+    "idealCookTempC": 120,
+    "idealInternalTempC": 77,
+    "stallTempC": 60,
+    "stallDurationMin": 0,
+    "barkPotential": 0.3,
+    "moistureSensitivity": 0.4,
+    "smokeAbsorption": 0.2,
+    "restingMin": 5,
+    "yieldPercent": 0.9,
+    "difficulty": 1,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.2}
+    ],
+    "prepSteps": [
+      {"name": "dry_and_season", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "beef_back_ribs",
+    "name": "Beef Back Ribs",
+    "category": "beef",
+    "weightRangeKg": [1.5, 3.0],
+    "idealCookTempC": 107,
+    "idealInternalTempC": 91,
+    "stallTempC": 68,
+    "stallDurationMin": 45,
+    "barkPotential": 0.8,
+    "moistureSensitivity": 0.4,
+    "smokeAbsorption": 0.7,
+    "restingMin": 20,
+    "yieldPercent": 0.55,
+    "difficulty": 4,
+    "grades": [
+      {"name": "Choice", "priceMultiplier": 1.0, "minMarbling": 0.3},
+      {"name": "Prime", "priceMultiplier": 1.6, "minMarbling": 0.5}
+    ],
+    "prepSteps": [
+      {"name": "remove_membrane", "difficulty": 2},
+      {"name": "trim_excess_fat", "difficulty": 2},
+      {"name": "apply_rub", "difficulty": 2}
+    ]
+  },
+  {
+    "id": "pork_belly",
+    "name": "Pork Belly",
+    "category": "pork",
+    "weightRangeKg": [2.0, 4.0],
+    "idealCookTempC": 107,
+    "idealInternalTempC": 91,
+    "stallTempC": 65,
+    "stallDurationMin": 30,
+    "barkPotential": 0.6,
+    "moistureSensitivity": 0.5,
+    "smokeAbsorption": 0.5,
+    "restingMin": 20,
+    "yieldPercent": 0.70,
+    "difficulty": 3,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.4}
+    ],
+    "prepSteps": [
+      {"name": "score_skin", "difficulty": 3},
+      {"name": "apply_rub", "difficulty": 2}
+    ]
+  },
+  {
+    "id": "sausage_links",
+    "name": "Sausage Links",
+    "category": "sausage",
+    "weightRangeKg": [0.2, 0.5],
+    "idealCookTempC": 110,
+    "idealInternalTempC": 71,
+    "stallTempC": 55,
+    "stallDurationMin": 0,
+    "barkPotential": 0.2,
+    "moistureSensitivity": 0.3,
+    "smokeAbsorption": 0.5,
+    "restingMin": 5,
+    "yieldPercent": 0.95,
+    "difficulty": 1,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.2}
+    ],
+    "prepSteps": [
+      {"name": "prick_casings", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "turkey_breast",
+    "name": "Turkey Breast",
+    "category": "chicken",
+    "weightRangeKg": [1.5, 3.0],
+    "idealCookTempC": 120,
+    "idealInternalTempC": 74,
+    "stallTempC": 62,
+    "stallDurationMin": 20,
+    "barkPotential": 0.4,
+    "moistureSensitivity": 0.8,
+    "smokeAbsorption": 0.4,
+    "restingMin": 20,
+    "yieldPercent": 0.70,
+    "difficulty": 3,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.2},
+      {"name": "Free Range", "priceMultiplier": 1.4, "minMarbling": 0.3}
+    ],
+    "prepSteps": [
+      {"name": "brine", "difficulty": 2},
+      {"name": "apply_rub", "difficulty": 1}
+    ]
+  },
+  {
+    "id": "whole_turkey",
+    "name": "Whole Turkey",
+    "category": "chicken",
+    "weightRangeKg": [4.0, 8.0],
+    "idealCookTempC": 107,
+    "idealInternalTempC": 74,
+    "stallTempC": 62,
+    "stallDurationMin": 30,
+    "barkPotential": 0.5,
+    "moistureSensitivity": 0.7,
+    "smokeAbsorption": 0.5,
+    "restingMin": 30,
+    "yieldPercent": 0.60,
+    "difficulty": 4,
+    "grades": [
+      {"name": "Standard", "priceMultiplier": 1.0, "minMarbling": 0.2},
+      {"name": "Free Range", "priceMultiplier": 1.5, "minMarbling": 0.3}
+    ],
+    "prepSteps": [
+      {"name": "brine", "difficulty": 3},
+      {"name": "truss", "difficulty": 3},
+      {"name": "apply_rub_or_butter", "difficulty": 2}
+    ]
+  }
+]

@@ -1,0 +1,379 @@
+[
+  {
+    "id": "neighborhood_cookout",
+    "name": "Neighborhood Cookout",
+    "description": "Your neighbors heard about your smoking and asked you to bring BBQ to the block party. First real public cook.",
+    "type": "gig",
+    "phase": 1,
+    "difficulty": 1,
+    "reputationRequired": 0,
+    "payoutRange": [30, 80],
+    "customerCountRange": [15, 30],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 2},
+      {"meatType": "chicken", "quantityKg": 1}
+    ],
+    "specialRules": [],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 240,
+    "scoreWeight": null
+  },
+  {
+    "id": "backyard_brisket_test",
+    "name": "Backyard Brisket Test",
+    "description": "Your buddy bets you can't smoke a brisket worth eating. Prove him wrong on a lazy Saturday.",
+    "type": "gig",
+    "phase": 1,
+    "difficulty": 2,
+    "reputationRequired": 0,
+    "payoutRange": [20, 50],
+    "customerCountRange": [5, 10],
+    "meatRequirements": [
+      {"meatType": "brisket", "quantityKg": 4}
+    ],
+    "specialRules": ["single_meat"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 480,
+    "scoreWeight": null
+  },
+  {
+    "id": "facebook_group_takeover",
+    "name": "Local BBQ Group Takeover",
+    "description": "You got invited to cook for the county BBQ Facebook group's monthly meetup. 20 hungry enthusiasts with opinions.",
+    "type": "gig",
+    "phase": 1,
+    "difficulty": 2,
+    "reputationRequired": 10,
+    "payoutRange": [50, 120],
+    "customerCountRange": [20, 35],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 3},
+      {"meatType": "chicken", "quantityKg": 2}
+    ],
+    "specialRules": ["judged_by_enthusiasts"],
+    "weather": ["sunny", "cloudy", "windy"],
+    "timeLimitMin": 360,
+    "scoreWeight": null
+  },
+  {
+    "id": "family_reunion_catering",
+    "name": "Family Reunion Catering",
+    "description": "Your aunt heard about your BBQ. Now you're cooking for 40 family members. No pressure.",
+    "type": "gig",
+    "phase": 1,
+    "difficulty": 3,
+    "reputationRequired": 20,
+    "payoutRange": [100, 250],
+    "customerCountRange": [30, 50],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 4},
+      {"meatType": "chicken", "quantityKg": 3},
+      {"meatType": "brisket", "quantityKg": 3}
+    ],
+    "specialRules": ["family_discount_reduces_payout"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 420,
+    "scoreWeight": null
+  },
+  {
+    "id": "church_fundraiser",
+    "name": "Church Fundraiser Smoke",
+    "description": "The local church needs BBQ for their fundraiser. Pay is modest but the exposure is excellent.",
+    "type": "gig",
+    "phase": 1,
+    "difficulty": 2,
+    "reputationRequired": 15,
+    "payoutRange": [60, 150],
+    "customerCountRange": [40, 80],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 5},
+      {"meatType": "chicken", "quantityKg": 3}
+    ],
+    "specialRules": ["reputation_bonus_from_exposure"],
+    "weather": ["sunny", "cloudy", "rain"],
+    "timeLimitMin": 360,
+    "scoreWeight": null
+  },
+  {
+    "id": "tailgate_party",
+    "name": "Tailgate Party Smoke",
+    "description": "Game day tailgate. Ribs, wings, and beer. A happy crowd with low standards and high enthusiasm.",
+    "type": "gig",
+    "phase": 1,
+    "difficulty": 1,
+    "reputationRequired": 5,
+    "payoutRange": [40, 100],
+    "customerCountRange": [15, 40],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 2},
+      {"meatType": "chicken", "quantityKg": 2},
+      {"meatType": "sausage", "quantityKg": 1}
+    ],
+    "specialRules": ["drunk_customers_easier_to_impress"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 240,
+    "scoreWeight": null
+  },
+  {
+    "id": "local_comp",
+    "name": "Local BBQ Competition",
+    "description": "The annual county fair BBQ competition. Four categories: chicken, ribs, pork, brisket. This is where you prove yourself.",
+    "type": "competition",
+    "phase": 1,
+    "difficulty": 3,
+    "reputationRequired": 25,
+    "payoutRange": [200, 1000],
+    "customerCountRange": [100, 300],
+    "meatRequirements": [
+      {"meatType": "chicken", "quantityKg": 2},
+      {"meatType": "pork", "quantityKg": 3},
+      {"meatType": "brisket", "quantityKg": 4}
+    ],
+    "specialRules": ["kcbs_scoring", "all_four_categories"],
+    "weather": ["sunny", "cloudy", "windy"],
+    "timeLimitMin": 600,
+    "scoreWeight": {"appearance": 0.2, "taste": 0.4, "tenderness": 0.4}
+  },
+  {
+    "id": "regional_comp",
+    "name": "Regional BBQ Championship",
+    "description": "A KCBS-sanctioned regional competition. Serious pitmasters with serious gear. Top 10 here means something.",
+    "type": "competition",
+    "phase": 2,
+    "difficulty": 4,
+    "reputationRequired": 100,
+    "payoutRange": [1000, 5000],
+    "customerCountRange": [500, 1000],
+    "meatRequirements": [
+      {"meatType": "chicken", "quantityKg": 3},
+      {"meatType": "pork", "quantityKg": 5},
+      {"meatType": "brisket", "quantityKg": 6},
+      {"meatType": "sausage", "quantityKg": 2}
+    ],
+    "specialRules": ["kcbs_scoring", "professional_judges", "media_present"],
+    "weather": ["sunny", "cloudy", "windy", "rain"],
+    "timeLimitMin": 720,
+    "scoreWeight": {"appearance": 0.2, "taste": 0.4, "tenderness": 0.4}
+  },
+  {
+    "id": "state_championship",
+    "name": "State BBQ Championship",
+    "description": "The biggest competition in your state. Grand champion here qualifies for the national stage. Legends are made.",
+    "type": "competition",
+    "phase": 3,
+    "difficulty": 5,
+    "reputationRequired": 300,
+    "payoutRange": [5000, 20000],
+    "customerCountRange": [2000, 5000],
+    "meatRequirements": [
+      {"meatType": "chicken", "quantityKg": 5},
+      {"meatType": "pork", "quantityKg": 8},
+      {"meatType": "brisket", "quantityKg": 10},
+      {"meatType": "sausage", "quantityKg": 3},
+      {"meatType": "beef", "quantityKg": 5}
+    ],
+    "specialRules": ["kcbs_scoring", "national_qualifier", "tv_coverage", "grand_champion_bonus"],
+    "weather": ["sunny", "cloudy", "windy", "rain", "cold"],
+    "timeLimitMin": 840,
+    "scoreWeight": {"appearance": 0.2, "taste": 0.4, "tenderness": 0.4}
+  },
+  {
+    "id": "brewery_popup",
+    "name": "Brewery Pop-up",
+    "description": "A local craft brewery wants you to set up in their parking lot every Friday. Consistent gig with a built-in thirsty crowd.",
+    "type": "gig",
+    "phase": 2,
+    "difficulty": 3,
+    "reputationRequired": 60,
+    "payoutRange": [300, 800],
+    "customerCountRange": [80, 200],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 5},
+      {"meatType": "chicken", "quantityKg": 4},
+      {"meatType": "sausage", "quantityKg": 2}
+    ],
+    "specialRules": ["recurring_gig", "beer_pairing_bonus"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 360,
+    "scoreWeight": null
+  },
+  {
+    "id": "food_truck_festival",
+    "name": "Food Truck Festival",
+    "description": "Thirty food trucks, live music, and thousands of hungry festival-goers. High volume, high stress, high reward.",
+    "type": "gig",
+    "phase": 2,
+    "difficulty": 4,
+    "reputationRequired": 100,
+    "payoutRange": [500, 1500],
+    "customerCountRange": [200, 500],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 8},
+      {"meatType": "chicken", "quantityKg": 6},
+      {"meatType": "brisket", "quantityKg": 5},
+      {"meatType": "sausage", "quantityKg": 3}
+    ],
+    "specialRules": ["high_volume", "competitor_pressure"],
+    "weather": ["sunny", "cloudy", "rain"],
+    "timeLimitMin": 480,
+    "scoreWeight": null
+  },
+  {
+    "id": "county_fair_gig",
+    "name": "County Fair Concession",
+    "description": "Run a booth at the county fair for a week. Consistent daily crowds, but you're competing with funnel cakes and corn dogs.",
+    "type": "gig",
+    "phase": 2,
+    "difficulty": 3,
+    "reputationRequired": 80,
+    "payoutRange": [800, 2500],
+    "customerCountRange": [150, 400],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 10},
+      {"meatType": "chicken", "quantityKg": 8},
+      {"meatType": "sausage", "quantityKg": 5}
+    ],
+    "specialRules": ["multi_day", "fairgoer_expectations"],
+    "weather": ["sunny", "cloudy", "rain", "windy"],
+    "timeLimitMin": 600,
+    "scoreWeight": null
+  },
+  {
+    "id": "wedding_catering",
+    "name": "Wedding Catering Service",
+    "description": "A couple wants BBQ at their wedding. 200 guests, sit-down service, and the bride's parents are paying. This is a big deal.",
+    "type": "gig",
+    "phase": 2,
+    "difficulty": 4,
+    "reputationRequired": 150,
+    "payoutRange": [2000, 5000],
+    "customerCountRange": [150, 300],
+    "meatRequirements": [
+      {"meatType": "brisket", "quantityKg": 10},
+      {"meatType": "pork", "quantityKg": 8},
+      {"meatType": "chicken", "quantityKg": 6},
+      {"meatType": "sausage", "quantityKg": 4}
+    ],
+    "specialRules": ["plated_service", "high_expectations", "gratuity_included"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 540,
+    "scoreWeight": null
+  },
+  {
+    "id": "grand_opening",
+    "name": "Grand Opening Rush",
+    "description": "Your restaurant's grand opening. The local food critic is here. The line is out the door. Don't screw this up.",
+    "type": "gig",
+    "phase": 3,
+    "difficulty": 5,
+    "reputationRequired": 250,
+    "payoutRange": [3000, 8000],
+    "customerCountRange": [200, 400],
+    "meatRequirements": [
+      {"meatType": "brisket", "quantityKg": 12},
+      {"meatType": "pork", "quantityKg": 10},
+      {"meatType": "chicken", "quantityKg": 8},
+      {"meatType": "sausage", "quantityKg": 5},
+      {"meatType": "beef", "quantityKg": 5}
+    ],
+    "specialRules": ["critic_present", "grand_opening", "media_present"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 600,
+    "scoreWeight": null
+  },
+  {
+    "id": "restaurant_dinner_rush",
+    "name": "Saturday Dinner Rush",
+    "description": "A packed Saturday night at your restaurant. Every table full, every ticket matters. Pure chaos.",
+    "type": "gig",
+    "phase": 3,
+    "difficulty": 4,
+    "reputationRequired": 200,
+    "payoutRange": [2000, 5000],
+    "customerCountRange": [150, 300],
+    "meatRequirements": [
+      {"meatType": "brisket", "quantityKg": 8},
+      {"meatType": "pork", "quantityKg": 6},
+      {"meatType": "chicken", "quantityKg": 5},
+      {"meatType": "sausage", "quantityKg": 3}
+    ],
+    "specialRules": ["high_expectations", "review_potential"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 300,
+    "scoreWeight": null
+  },
+  {
+    "id": "rain_out_challenge",
+    "name": "Rain Out Recovery",
+    "description": "A sudden thunderstorm hit your setup. Can you salvage the cook and keep the food safe?",
+    "type": "challenge",
+    "phase": 1,
+    "difficulty": 3,
+    "reputationRequired": 20,
+    "payoutRange": [0, 50],
+    "customerCountRange": [0, 0],
+    "meatRequirements": [
+      {"meatType": "brisket", "quantityKg": 4}
+    ],
+    "specialRules": ["weather_crisis", "no_customers"],
+    "weather": ["rain", "windy"],
+    "timeLimitMin": 120,
+    "scoreWeight": null
+  },
+  {
+    "id": "broken_thermometer",
+    "name": "Broken Thermometer Crisis",
+    "description": "Your probe thermometer just died mid-cook. You have to judge doneness by feel and experience alone.",
+    "type": "challenge",
+    "phase": 1,
+    "difficulty": 3,
+    "reputationRequired": 30,
+    "payoutRange": [0, 0],
+    "customerCountRange": [0, 0],
+    "meatRequirements": [
+      {"meatType": "pork", "quantityKg": 3},
+      {"meatType": "chicken", "quantityKg": 2}
+    ],
+    "specialRules": ["no_probes", "experience_check"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 180,
+    "scoreWeight": null
+  },
+  {
+    "id": "food_critic_visit",
+    "name": "Food Critic Surprise Visit",
+    "description": "A famous food critic showed up unannounced. Everything you serve today will be reviewed. Nail it or nail your reputation.",
+    "type": "challenge",
+    "phase": 2,
+    "difficulty": 4,
+    "reputationRequired": 100,
+    "payoutRange": [0, 0],
+    "customerCountRange": [30, 50],
+    "meatRequirements": [
+      {"meatType": "brisket", "quantityKg": 4},
+      {"meatType": "pork", "quantityKg": 3},
+      {"meatType": "chicken", "quantityKg": 2},
+      {"meatType": "sausage", "quantityKg": 1}
+    ],
+    "specialRules": ["critic_present", "reputation_at_stake", "double_reputation_impact"],
+    "weather": ["sunny", "cloudy"],
+    "timeLimitMin": 300,
+    "scoreWeight": null
+  },
+  {
+    "id": "first_comp_win",
+    "name": "First Competition Victory",
+    "description": "You just won your first competition! The crowd is cheering, the judges are impressed, and your BBQ name is spreading.",
+    "type": "milestone",
+    "phase": 1,
+    "difficulty": 0,
+    "reputationRequired": 0,
+    "payoutRange": [0, 0],
+    "customerCountRange": [0, 0],
+    "meatRequirements": [],
+    "specialRules": ["milestone", "automatic_trigger"],
+    "weather": ["sunny"],
+    "timeLimitMin": 0,
+    "scoreWeight": null
+  }
+]

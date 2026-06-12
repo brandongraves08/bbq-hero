@@ -1,0 +1,43 @@
+; BBQ Hero - Project Configuration
+; Godot 4.x Game Engine
+; A realistic BBQ management simulation
+
+[application]
+config/name="Smoke & Fire: BBQ Hero"
+config/description="From backyard pitmaster to competition champion. Manage your BBQ business, master fire and smoke, and build your reputation one rack at a time."
+config/icon="res://assets/icons/game_icon.svg"
+
+[rendering]
+renderer/backend="gl_compatibility"
+renderer/anti_aliasing/quality=1
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=0
+window/size/stretch/mode="2d"
+window/size/stretch/aspect="expand"
+window/dpi/allow_hidpi=true
+
+[autoload]
+GameManager="*res://scripts/systems/GameManager.gd"
+EconomyManager="*res://scripts/systems/EconomyManager.gd"
+ReputationManager="*res://scripts/systems/ReputationManager.gd"
+TimeManager="*res://scripts/systems/TimeManager.gd"
+RecipeManager="*res://scripts/data/RecipeManager.gd"
+InventoryManager="*res://scripts/systems/InventoryManager.gd"
+UpgradeManager="*res://scripts/systems/UpgradeManager.gd"
+EventManager="*res://scripts/systems/EventManager.gd"
+CookerManager="*res://scripts/systems/CookerManager.gd"
+FuelManager="*res://scripts/data/FuelManager.gd"
+CookerManager="*res://scripts/systems/CookerManager.gd"
+FuelManager="*res://scripts/data/FuelManager.gd"
+
+[input_devices]
+pointing/emulate_touch_from_mouse=false
+
+[physics]
+common/enable_pause_aware_picking=true
+
+[editor_plugins]
+enabled=[]
