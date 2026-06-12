@@ -1,6 +1,7 @@
 extends Control
 
-## Main game HUD controller
+## Main game HUD — event-bus driven.
+## Subscribes to EventBus for all display updates.
 
 @onready var day_label: Label = $HUD/DayLabel
 @onready var money_label: Label = $HUD/MoneyLabel
@@ -10,10 +11,19 @@ extends Control
 
 func _ready() -> void:
 	_update_display()
-	GameManager.day_changed.connect(_on_day_changed)
-	EconomyManager.money_changed.connect(_on_money_changed)
-	ReputationManager.reputation_changed.connect(_on_rep_changed)
-	TimeManager.time_advanced.connect(_on_time_advanced)
+	# Core state changes
+	GameManager.day_changed.connect(_update_display)
+	TimeManager.time_advanced.connect(_update_display)
+	# Economy and reputation via EventBus for consistency
+	EventBus.on("money_changed", _on_money_changed)
+	EventBus.on("reputation_changed", _on_rep_changed)
+	EventBus.on("fame_level_changed", _on_fame_changed)
+	# Initial state broadcast
+	_broadcast_current()
+
+func _broadcast_current() -> void:
+	EventBus.emit("money_changed", {"balance": EconomyManager.money, "delta": 0})
+	EventBus.emit("reputation_changed", {"value": ReputationManager.reputation, "delta": 0})
 
 func _update_display() -> void:
 	day_label.text = "Day %d" % GameManager.current_day
@@ -22,14 +32,11 @@ func _update_display() -> void:
 	time_label.text = TimeManager.get_time_of_day_string()
 	phase_label.text = ReputationManager.get_fame_level_name()
 
-func _on_day_changed(day: int) -> void:
+func _on_money_changed(data: Dictionary) -> void:
 	_update_display()
 
-func _on_money_changed(balance: float, delta: float) -> void:
+func _on_rep_changed(data: Dictionary) -> void:
 	_update_display()
 
-func _on_rep_changed(value: float, delta: float) -> void:
-	_update_display()
-
-func _on_time_advanced(hours: float) -> void:
+func _on_fame_changed(_level) -> void:
 	_update_display()

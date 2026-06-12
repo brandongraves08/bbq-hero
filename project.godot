@@ -30,8 +30,8 @@ UpgradeManager="*res://scripts/systems/UpgradeManager.gd"
 EventManager="*res://scripts/systems/EventManager.gd"
 CookerManager="*res://scripts/systems/CookerManager.gd"
 FuelManager="*res://scripts/data/FuelManager.gd"
-CookerManager="*res://scripts/systems/CookerManager.gd"
-FuelManager="*res://scripts/data/FuelManager.gd"
+EventBus="*res://scripts/systems/EventBus.gd"
+TickManager="*res://scripts/systems/TickManager.gd"
 
 [input_devices]
 pointing/emulate_touch_from_mouse=false

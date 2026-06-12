@@ -1,6 +1,7 @@
 extends Control
 
-## Smoker control panel UI
+## Smoker control panel UI — event-bus driven.
+## Subscribes to fire_state_updated for display, sends commands via FireSystem reference.
 
 @onready var temp_display: Label = $VBoxContainer/TempDisplay
 @onready var fuel_display: Label = $VBoxContainer/FuelDisplay
@@ -21,9 +22,13 @@ func _ready() -> void:
 	add_fuel_btn.pressed.connect(_on_add_fuel)
 	add_wood_btn.pressed.connect(_on_add_wood)
 	add_water_btn.pressed.connect(_on_add_water)
+	EventBus.on("fire_state_updated", _on_fire_state_update)
+	EventBus.on("fire_lit", _on_fire_lit)
+	EventBus.on("fire_out", _on_fire_out)
+	EventBus.on("fire_fuel_low", _on_fuel_low)
 
-func setup(fire_system: FireSystem) -> void:
-	_fire_system = fire_system
+func setup(fire: FireSystem) -> void:
+	_fire_system = fire
 	if _fire_system == null:
 		return
 	target_temp_spin.min_value = _fire_system.get("_min_temp", 80)
@@ -32,7 +37,24 @@ func setup(fire_system: FireSystem) -> void:
 	intake_slider.value = _fire_system.air_intake_open * 100
 	exhaust_slider.value = _fire_system.exhaust_open * 100
 
-func update_display(temp: float, fuel: float, intake: float, smoke_q: float) -> void:
+func _on_fire_state_update(data: Dictionary) -> void:
+	update_display(
+		data.get("temp", 0),
+		data.get("fuel_remaining", 0),
+		data.get("air_intake", 0.5),
+		data.get("smoke_quality", 0.7)
+	)
+
+func _on_fire_lit(_data) -> void:
+	print("UI: Fire lit!")
+
+func _on_fire_out(_data) -> void:
+	print("UI: Fire went out!")
+
+func _on_fuel_low(_data) -> void:
+	print("UI: Fuel low!")
+
+func update_display(temp: float, fuel: float, _intake: float, smoke_q: float) -> void:
 	temp_display.text = "Temp: %.0f°C" % temp
 	fuel_display.text = "Fuel: %.1f kg" % fuel
 	smoke_display.text = "Smoke: %d%%" % (smoke_q * 100)
@@ -52,8 +74,7 @@ func _on_target_temp_changed(value: float) -> void:
 func _on_add_fuel() -> void:
 	if _fire_system:
 		_fire_system.add_fuel("lump_oak", 1.0)
-		if EconomyManager.spend(2.5, "fuel"):
-			pass
+		EconomyManager.spend(2.5, "fuel")
 
 func _on_add_wood() -> void:
 	if _fire_system:
