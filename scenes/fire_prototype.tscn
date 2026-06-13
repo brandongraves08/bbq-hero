@@ -1,0 +1,252 @@
+[gd_scene load_steps=2 format=3 uid="uid://fire_prototype"]
+
+[ext_resource type="Script" path="res://scripts/ui/FirePrototype.gd" id="1"]
+
+[node name="FirePrototype" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 20
+offset_top = 20
+offset_right = 400
+offset_bottom = 700
+theme_override_constants/separation = 10
+
+[node name="HeaderLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+text = "🔥 Fire System Prototype"
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "❄️ COLD — Light the fire"
+
+[node name="TempPanel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TempLabel" type="Label" parent="VBoxContainer/TempPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 5
+theme_override_font_sizes/font_size = 18
+text = "25°C"
+
+[node name="TempBar" type="ProgressBar" parent="VBoxContainer/TempPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 30
+offset_right = 350
+offset_bottom = 55
+max_value = 180.0
+value = 25.0
+percent_visible = false
+
+[node name="TrendLabel" type="Label" parent="VBoxContainer/TempPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 58
+text = "idle"
+
+[node name="FuelPanel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FuelLabel" type="Label" parent="VBoxContainer/FuelPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 5
+text = "Fuel: 0.0 kg"
+
+[node name="FuelBar" type="ProgressBar" parent="VBoxContainer/FuelPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 28
+offset_right = 350
+offset_bottom = 48
+max_value = 10.0
+
+[node name="SmokePanel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SmokeLabel" type="Label" parent="VBoxContainer/SmokePanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 5
+text = "Smoke: 70%"
+
+[node name="SmokeBar" type="ProgressBar" parent="VBoxContainer/SmokePanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 28
+offset_right = 350
+offset_bottom = 48
+max_value = 1.0
+value = 0.7
+
+[node name="CoalPanel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CoalLabel" type="Label" parent="VBoxContainer/CoalPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 5
+text = "Coal Bed"
+
+[node name="CoalBar" type="ProgressBar" parent="VBoxContainer/CoalPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 26
+offset_right = 350
+offset_bottom = 46
+max_value = 1.0
+value = 0.5
+
+[node name="WaterPanel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="WaterLabel" type="Label" parent="VBoxContainer/WaterPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 5
+text = "Water Pan"
+
+[node name="WaterBar" type="ProgressBar" parent="VBoxContainer/WaterPanel"]
+layout_mode = 1
+offset_left = 10
+offset_top = 26
+offset_right = 350
+offset_bottom = 46
+max_value = 1.0
+value = 0.5
+
+[node name="Controls" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="Label" parent="VBoxContainer/Controls"]
+layout_mode = 1
+offset_left = 10
+offset_top = 5
+theme_override_font_sizes/font_size = 16
+text = "Controls"
+
+[node name="IntakeRow" type="HBoxContainer" parent="VBoxContainer/Controls"]
+layout_mode = 1
+offset_left = 10
+offset_top = 30
+
+[node name="IntakeLabel" type="Label" parent="VBoxContainer/Controls/IntakeRow"]
+layout_mode = 2
+text = "Intake"
+custom_minimum_size = Vector2(60, 0)
+
+[node name="IntakeSlider" type="HSlider" parent="VBoxContainer/Controls/IntakeRow"]
+layout_mode = 2
+min_value = 0.0
+max_value = 100.0
+value = 50.0
+custom_minimum_size = Vector2(200, 0)
+
+[node name="ExhaustRow" type="HBoxContainer" parent="VBoxContainer/Controls"]
+layout_mode = 1
+offset_left = 10
+offset_top = 58
+
+[node name="ExhaustLabel" type="Label" parent="VBoxContainer/Controls/ExhaustRow"]
+layout_mode = 2
+text = "Exhaust"
+custom_minimum_size = Vector2(60, 0)
+
+[node name="ExhaustSlider" type="HSlider" parent="VBoxContainer/Controls/ExhaustRow"]
+layout_mode = 2
+min_value = 0.0
+max_value = 100.0
+value = 70.0
+custom_minimum_size = Vector2(200, 0)
+
+[node name="TargetRow" type="HBoxContainer" parent="VBoxContainer/Controls"]
+layout_mode = 1
+offset_left = 10
+offset_top = 86
+
+[node name="TargetLabel" type="Label" parent="VBoxContainer/Controls/TargetRow"]
+layout_mode = 2
+text = "Target C"
+custom_minimum_size = Vector2(60, 0)
+
+[node name="TargetSpin" type="SpinBox" parent="VBoxContainer/Controls/TargetRow"]
+layout_mode = 2
+min_value = 80.0
+max_value = 180.0
+value = 107.0
+custom_minimum_size = Vector2(200, 0)
+
+[node name="ButtonRow" type="HBoxContainer" parent="VBoxContainer/Controls"]
+layout_mode = 1
+offset_left = 10
+offset_top = 120
+theme_override_constants/separation = 4
+
+[node name="LightFireBtn" type="Button" parent="VBoxContainer/Controls/ButtonRow"]
+layout_mode = 2
+text = "🔥 Light"
+custom_minimum_size = Vector2(70, 35)
+
+[node name="AddFuelBtn" type="Button" parent="VBoxContainer/Controls/ButtonRow"]
+layout_mode = 2
+text = "+Fuel"
+custom_minimum_size = Vector2(60, 35)
+
+[node name="AddWoodBtn" type="Button" parent="VBoxContainer/Controls/ButtonRow"]
+layout_mode = 2
+text = "+Wood"
+custom_minimum_size = Vector2(60, 35)
+
+[node name="AddWaterBtn" type="Button" parent="VBoxContainer/Controls/ButtonRow"]
+layout_mode = 2
+text = "+Water"
+custom_minimum_size = Vector2(65, 35)
+
+[node name="ExtinguishBtn" type="Button" parent="VBoxContainer/Controls/ButtonRow"]
+layout_mode = 2
+text = "❌ Out"
+custom_minimum_size = Vector2(60, 35)
+
+[node name="SpeedRow" type="HBoxContainer" parent="VBoxContainer/Controls"]
+layout_mode = 1
+offset_left = 10
+offset_top = 165
+theme_override_constants/separation = 6
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/Controls/SpeedRow"]
+layout_mode = 2
+text = "Speed: 1.0x"
+custom_minimum_size = Vector2(70, 0)
+
+[node name="Speed1xBtn" type="Button" parent="VBoxContainer/Controls/SpeedRow"]
+layout_mode = 2
+text = "1x"
+custom_minimum_size = Vector2(35, 30)
+
+[node name="Speed2xBtn" type="Button" parent="VBoxContainer/Controls/SpeedRow"]
+layout_mode = 2
+text = "2x"
+custom_minimum_size = Vector2(35, 30)
+
+[node name="Speed5xBtn" type="Button" parent="VBoxContainer/Controls/SpeedRow"]
+layout_mode = 2
+text = "5x"
+custom_minimum_size = Vector2(35, 30)
+
+[node name="Speed10xBtn" type="Button" parent="VBoxContainer/Controls/SpeedRow"]
+layout_mode = 2
+text = "10x"
+custom_minimum_size = Vector2(35, 30)
