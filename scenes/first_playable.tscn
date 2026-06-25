@@ -1,0 +1,778 @@
+[gd_scene load_steps=2 format=3 uid="uid://first_playable"]
+
+[ext_resource type="Script" path="res://scripts/ui/FirstPlayable.gd" id="1"]
+
+[node name="FirstPlayable" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+; ═══════════════════════════════════════════════════════════════════════════════
+; SETUP PHASE PANEL
+; ═══════════════════════════════════════════════════════════════════════════════
+
+[node name="SetupPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1280
+offset_bottom = 720
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SetupPanel"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1280
+offset_bottom = 720
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SetupPanel/MarginContainer"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1220
+offset_bottom = 680
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="SetupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+horizontal_alignment = 1
+text = "🔥 FIRST PLAYABLE: BRISKET COOK"
+autowrap_mode = 1
+
+[node name="TitleSub" type="Label" parent="SetupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.85, 0.7, 0.4, 1)
+horizontal_alignment = 1
+text = "Choose your smoker and meat, then fire it up!"
+
+[node name="HR1" type="HSeparator" parent="SetupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+; ── Smoker Select ────────────────────────────────────────────────────────────
+[node name="SmokerSelect" type="VBoxContainer" parent="SetupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SmokerHeader" type="Label" parent="SetupPanel/MarginContainer/VBoxContainer/SmokerSelect"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0.7, 0.3, 1)
+text = "🔥 Select Your Smoker"
+
+[node name="SmokerDesc" type="Label" parent="SetupPanel/MarginContainer/VBoxContainer/SmokerSelect"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 1
+text = "Select a smoker to see its description."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SetupPanel/MarginContainer/VBoxContainer/SmokerSelect"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 90)
+theme_override_constants/separation = 4
+
+; ── Meat Select ──────────────────────────────────────────────────────────────
+[node name="MeatSelect" type="VBoxContainer" parent="SetupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MeatHeader" type="Label" parent="SetupPanel/MarginContainer/VBoxContainer/MeatSelect"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.9, 0.5, 0.2, 1)
+text = "🥩 Select Your Meat"
+
+[node name="MeatDesc" type="Label" parent="SetupPanel/MarginContainer/VBoxContainer/MeatSelect"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 1
+text = "Select meat to see details."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SetupPanel/MarginContainer/VBoxContainer/MeatSelect"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 90)
+theme_override_constants/separation = 4
+
+; ── Weight Select ────────────────────────────────────────────────────────────
+[node name="WeightRow" type="HBoxContainer" parent="SetupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="WeightLabel" type="Label" parent="SetupPanel/MarginContainer/VBoxContainer/WeightRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+custom_minimum_size = Vector2(130, 0)
+text = "Weight: 7.0 kg"
+
+[node name="HSlider" type="HSlider" parent="SetupPanel/MarginContainer/VBoxContainer/WeightRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 5.0
+max_value = 9.0
+step = 0.1
+value = 7.0
+
+; ── Begin Button ─────────────────────────────────────────────────────────────
+[node name="BeginBtn" type="Button" parent="SetupPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(350, 50)
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+size_flags_horizontal = 4
+text = "🔥 LIGHT THE FIRE & BEGIN! 🔥"
+
+
+; ═══════════════════════════════════════════════════════════════════════════════
+; COOKING PHASE PANEL
+; ═══════════════════════════════════════════════════════════════════════════════
+
+[node name="CookingPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1280
+offset_bottom = 720
+visible = false
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CookingPanel"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1280
+offset_bottom = 720
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CookingPanel/MarginContainer"]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1260
+offset_bottom = 700
+theme_override_constants/separation = 10
+
+; ─├─ LEFT: FIRE PANEL ─────────────────────────────────────────────────────────
+[node name="FirePanel" type="Panel" parent="CookingPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(520, 0)
+size_flags_horizontal = 0
+
+[node name="VBox" type="VBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel"]
+layout_mode = 1
+offset_left = 8
+offset_top = 8
+offset_right = 512
+offset_bottom = 680
+theme_override_constants/separation = 6
+
+[node name="FireHeader" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+text = "🔥 Fire Management"
+
+[node name="StatusLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.9, 0.8, 0.6, 1)
+text = "❄️ COLD — Light the fire!"
+
+; ── Temp ──────────────────────────────────────────────────────────────────────
+[node name="TempRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+theme_override_constants/separation = 6
+
+[node name="TempLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/TempRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+custom_minimum_size = Vector2(75, 0)
+text = "25°C"
+
+[node name="TempBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/TempRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 36)
+max_value = 180.0
+value = 25.0
+percent_visible = false
+
+[node name="TrendLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/TempRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+custom_minimum_size = Vector2(70, 0)
+text = "stable"
+
+; ── Fuel ──────────────────────────────────────────────────────────────────────
+[node name="FuelRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+theme_override_constants/separation = 6
+
+[node name="FuelLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/FuelRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(75, 0)
+text = "Fuel: 0.0 kg"
+
+[node name="FuelBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/FuelRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+max_value = 10.0
+
+; ── Smoke ─────────────────────────────────────────────────────────────────────
+[node name="SmokeRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+theme_override_constants/separation = 6
+
+[node name="SmokeLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SmokeRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(75, 0)
+text = "Smoke: 70%"
+
+[node name="SmokeBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SmokeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+max_value = 1.0
+value = 0.7
+
+; ── Coal & Water ──────────────────────────────────────────────────────────────
+[node name="CoalRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+theme_override_constants/separation = 6
+
+[node name="CoalLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/CoalRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(75, 0)
+text = "Coal Bed"
+
+[node name="CoalBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/CoalRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+max_value = 1.0
+value = 0.5
+
+[node name="WaterRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 36)
+theme_override_constants/separation = 6
+
+[node name="WaterLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/WaterRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(75, 0)
+text = "Water Pan"
+
+[node name="WaterBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/WaterRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+max_value = 1.0
+value = 0.5
+
+; ── Controls ──────────────────────────────────────────────────────────────────
+[node name="ControlsRow" type="Panel" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+self_modulate = Color(0.95, 0.85, 0.7, 0.15)
+
+[node name="ControlsHeader" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ControlsRow"]
+layout_mode = 1
+offset_left = 6
+offset_top = 4
+theme_override_font_sizes/font_size = 14
+text = "Controls"
+
+[node name="IntakeSlider" type="HSlider" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ControlsRow"]
+layout_mode = 1
+offset_left = 6
+offset_top = 26
+offset_right = 490
+offset_bottom = 46
+min_value = 0.0
+max_value = 100.0
+value = 50.0
+
+[node name="IntakeLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ControlsRow"]
+layout_mode = 1
+offset_left = 6
+offset_top = 48
+text = "Intake"
+
+[node name="ExhaustSlider" type="HSlider" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ControlsRow"]
+layout_mode = 1
+offset_left = 6
+offset_top = 68
+offset_right = 490
+offset_bottom = 88
+min_value = 0.0
+max_value = 100.0
+value = 70.0
+
+[node name="ExhaustLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ControlsRow"]
+layout_mode = 1
+offset_left = 6
+offset_top = 88
+text = "Exhaust"
+
+[node name="TargetSpin" type="SpinBox" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ControlsRow"]
+layout_mode = 1
+offset_left = 6
+offset_top = 110
+offset_right = 120
+offset_bottom = 134
+min_value = 80.0
+max_value = 180.0
+value = 107.0
+
+[node name="TargetLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ControlsRow"]
+layout_mode = 1
+offset_left = 130
+offset_top = 112
+text = "Target °C"
+
+; ── Action Buttons ────────────────────────────────────────────────────────────
+[node name="ActionRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LightBtn" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ActionRow"]
+layout_mode = 2
+text = "🔥 Light Fire"
+custom_minimum_size = Vector2(95, 32)
+
+[node name="FuelBtn" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ActionRow"]
+layout_mode = 2
+text = "+Fuel"
+custom_minimum_size = Vector2(65, 32)
+
+[node name="WoodBtn" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ActionRow"]
+layout_mode = 2
+text = "+Wood Split"
+custom_minimum_size = Vector2(95, 32)
+
+[node name="WaterBtn" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/ActionRow"]
+layout_mode = 2
+text = "+Water"
+custom_minimum_size = Vector2(75, 32)
+
+; ── Speed Controls ────────────────────────────────────────────────────────────
+[node name="SpeedRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SpeedLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SpeedRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+text = "Speed: 1.0x"
+
+[node name="Speed1x" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SpeedRow"]
+layout_mode = 2
+text = "1x"
+custom_minimum_size = Vector2(40, 28)
+
+[node name="Speed2x" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SpeedRow"]
+layout_mode = 2
+text = "2x"
+custom_minimum_size = Vector2(40, 28)
+
+[node name="Speed5x" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SpeedRow"]
+layout_mode = 2
+text = "5x"
+custom_minimum_size = Vector2(40, 28)
+
+[node name="Speed10x" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SpeedRow"]
+layout_mode = 2
+text = "10x"
+custom_minimum_size = Vector2(45, 28)
+
+; ─├─ RIGHT: MEAT PANEL ────────────────────────────────────────────────────────
+[node name="MeatPanel" type="Panel" parent="CookingPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(560, 0)
+
+[node name="VBox" type="VBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel"]
+layout_mode = 1
+offset_left = 8
+offset_top = 8
+offset_right = 720
+offset_bottom = 680
+theme_override_constants/separation = 6
+
+[node name="HeaderLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0.4, 0.2, 1)
+text = "🥩 Packer Brisket"
+
+[node name="StatusLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "🔥 Light the fire first, then load the meat!"
+autowrap_mode = 1
+
+[node name="CookTimeLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.8, 0.8, 0.4, 1)
+text = "⏱ 0h 00m"
+
+; ── Internal Temp ─────────────────────────────────────────────────────────────
+[node name="TempRow" type="VBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="TempHeader" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/TempRow"]
+layout_mode = 2
+
+[node name="TempLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/TempRow/TempHeader"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(80, 0)
+text = "4.0°C"
+
+[node name="TargetLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/TempRow/TempHeader"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Target: 95°C"
+
+[node name="TempBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/TempRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 32)
+max_value = 120.0
+value = 4.0
+percent_visible = false
+
+; ── Stall Indicator ───────────────────────────────────────────────────────────
+[node name="StallIndicator" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StallLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/StallIndicator"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+custom_minimum_size = Vector2(140, 0)
+text = "Temp rising normally"
+
+[node name="StallBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/StallIndicator"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 22)
+max_value = 1.0
+value = 0.0
+percent_visible = false
+
+; ── Quality Row: Bark, Ring, Moisture ─────────────────────────────────────────
+[node name="QualityRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+; Bark
+[node name="BarkBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+max_value = 1.0
+value = 0.0
+percent_visible = false
+
+[node name="BarkLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(65, 0)
+theme_override_font_sizes/font_size = 12
+text = "Bark: 0%"
+
+; Ring
+[node name="RingBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+max_value = 1.0
+value = 0.0
+percent_visible = false
+
+[node name="RingLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(68, 0)
+theme_override_font_sizes/font_size = 12
+text = "Ring: 0%"
+
+; Moisture
+[node name="MoistureBar" type="ProgressBar" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 28)
+max_value = 1.0
+value = 1.0
+percent_visible = false
+
+[node name="MoistureLabel" type="Label" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 0)
+theme_override_font_sizes/font_size = 12
+text = "Moisture: 100%"
+
+; ── Action Buttons ────────────────────────────────────────────────────────────
+[node name="ActionRow" type="HBoxContainer" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LoadMeatBtn" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/ActionRow"]
+layout_mode = 2
+text = "Load Meat"
+custom_minimum_size = Vector2(120, 34)
+disabled = true
+
+[node name="WrapBtn" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/ActionRow"]
+layout_mode = 2
+text = "📦 Wrap (Paper)"
+custom_minimum_size = Vector2(140, 34)
+disabled = true
+
+[node name="UnwrapBtn" type="Button" parent="CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/ActionRow"]
+layout_mode = 2
+text = "📄 Unwrap"
+custom_minimum_size = Vector2(110, 34)
+disabled = true
+
+
+; ═══════════════════════════════════════════════════════════════════════════════
+; RESTING PHASE PANEL
+; ═══════════════════════════════════════════════════════════════════════════════
+
+[node name="RestingPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1280
+offset_bottom = 720
+visible = false
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="RestingPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 250
+theme_override_constants/margin_right = 250
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_bottom = 200
+
+[node name="VBox" type="VBoxContainer" parent="RestingPanel/MarginContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="RestHeader" type="Label" parent="RestingPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 0.8, 0.3, 1)
+horizontal_alignment = 1
+text = "🛌 Meat is Resting"
+
+[node name="TempLabel" type="Label" parent="RestingPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+text = "Internal Temp: --°C (+3-4°C carryover)"
+
+[node name="RestBar" type="ProgressBar" parent="RestingPanel/MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+max_value = 100.0
+value = 60.0
+percent_visible = false
+
+[node name="TimerLabel" type="Label" parent="RestingPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+text = "Resting: 60 min remaining"
+
+[node name="RestInfoLabel" type="Label" parent="RestingPanel/MarginContainer/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "Resting allows carryover cooking and juice redistribution."
+
+
+; ═══════════════════════════════════════════════════════════════════════════════
+; RESULTS PHASE PANEL
+; ═══════════════════════════════════════════════════════════════════════════════
+
+[node name="ResultsPanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1280
+offset_bottom = 720
+visible = false
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ResultsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_bottom = 80
+
+[node name="VBox" type="VBoxContainer" parent="ResultsPanel/MarginContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="ResultsHeader" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+theme_override_colors/font_color = Color(1, 0.7, 0.2, 1)
+horizontal_alignment = 1
+text = "🏆 COOK RESULTS"
+
+[node name="GradeLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+horizontal_alignment = 1
+text = "🥇 Competition Grade"
+
+[node name="ScoreLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+horizontal_alignment = 1
+text = "🏆 TOTAL SCORE: 0.0 / 100"
+
+[node name="Divider" type="HSeparator" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="Breakdown" type="GridContainer" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+columns = 4
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 6
+
+; Header row
+[node name="BarkH" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.8, 0.6, 0.3, 1)
+text = "Bark"
+
+[node name="RingH" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.8, 0.6, 0.3, 1)
+text = "Smoke Ring"
+
+[node name="MoistureH" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.8, 0.6, 0.3, 1)
+text = "Moisture"
+
+[node name="TempH" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.8, 0.6, 0.3, 1)
+text = "Temp Accuracy"
+
+; Value row
+[node name="BarkValue" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+text = "0%"
+
+[node name="RingValue" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+text = "0%"
+
+[node name="MoistureValue" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+text = "0%"
+
+[node name="TempValue" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+text = "0%"
+
+; Time row
+[node name="TimeH" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.8, 0.6, 0.3, 1)
+text = "Cook Time"
+
+[node name="TimeValue" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0h 00m"
+
+[node name="Empty1" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+text = ""
+
+[node name="Empty2" type="Label" parent="ResultsPanel/MarginContainer/VBox/Breakdown"]
+layout_mode = 2
+text = ""
+
+[node name="Divider2" type="HSeparator" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="FeedbackLabel" type="Label" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
+custom_minimum_size = Vector2(0, 80)
+text = "Feedback will appear here after each cook."
+
+[node name="ActionRow" type="HBoxContainer" parent="ResultsPanel/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="RestartBtn" type="Button" parent="ResultsPanel/MarginContainer/VBox/ActionRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 44)
+theme_override_font_sizes/font_size = 18
+text = "🔥 Cook Again"
+
+[node name="QuitBtn" type="Button" parent="ResultsPanel/MarginContainer/VBox/ActionRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 44)
+theme_override_font_sizes/font_size = 18
+text = "Quit"
