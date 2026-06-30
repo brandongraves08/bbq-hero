@@ -74,3 +74,52 @@ func reset_daily() -> void:
 	daily_records.append(record)
 	daily_income.clear()
 	daily_expenses.clear()
+
+## ── Cook Result Processing ──────────────────────────────────────────────────
+## Called after a cook completes to calculate earnings, tips, expenses.
+## Returns a Dictionary with full breakdown for the day summary UI.
+func process_cook_result(meat_data: Dictionary, cook_score: float, event_data: Dictionary, fuel_cost: float = 0.0) -> Dictionary:
+	var result: Dictionary = {}
+	result["cook_score"] = cook_score
+	result["fuel_cost"] = fuel_cost
+
+	# Track fuel expense
+	if fuel_cost > 0.0:
+		spend(fuel_cost, "fuel")
+
+	# Track meat cost (approximate: weight × price_per_kg)
+	var meat_weight: float = meat_data.get("weight", 5.0)
+	var meat_cost_per_kg: float = 12.0  # Base cost per kg of meat
+	var meat_cost: float = meat_weight * meat_cost_per_kg
+	spend(meat_cost, "meat")
+	result["meat_cost"] = meat_cost
+
+	# Calculate base payout from event data
+	var payout_range: Array = event_data.get("payoutRange", [50, 150])
+	var base_payout: float = payout_range[0] + (payout_range[1] - payout_range[0]) * (cook_score / 100.0)
+	base_payout = round(base_payout * 100.0) / 100.0
+
+	# Score multiplier: score 0-100 maps to 0.3x - 1.5x
+	var score_mult: float = 0.3 + (cook_score / 100.0) * 1.2
+	var final_payout: float = round(base_payout * score_mult * 100.0) / 100.0
+
+	# Tips: based on score with some randomness
+	var rng = RandomNumberGenerator.new()
+	var tip_mult: float = 0.1 + (cook_score / 100.0) * 0.4  # 0.1x-0.5x of payout
+	tip_mult *= 1.0 + (rng.randf() - 0.5) * 0.4  # ±20% randomness
+	var tips: float = round(final_payout * tip_mult * 100.0) / 100.0
+
+	# Earn payout
+	earn(final_payout, "gig_payout")
+	earn(tips, "tips")
+
+	result["base_payout"] = base_payout
+	result["score_multiplier"] = score_mult
+	result["final_payout"] = final_payout
+	result["tips"] = tips
+	result["total_earned"] = final_payout + tips
+	result["total_expenses"] = fuel_cost + meat_cost
+	result["net_profit"] = result["total_earned"] - result["total_expenses"]
+
+	EventBus.emit("economy_processed", result)
+	return result

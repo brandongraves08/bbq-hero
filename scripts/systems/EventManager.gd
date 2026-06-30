@@ -2,6 +2,7 @@ extends Node
 class_name EventManager
 
 ## Manages available events, active events, and event history
+## Also provides gig filtering for the gig selection screen
 
 var available_events: Array = []
 var current_event: Dictionary = {}
@@ -47,6 +48,35 @@ func _refresh_available_events() -> void:
 func get_available_events() -> Array:
 	_refresh_available_events()
 	return available_events
+
+## ── Gig Selection ─────────────────────────────────────────────────────────
+
+## Returns only gig/challenge type events filtered by current phase and reputation.
+## Excludes milestones (auto-triggered) and competitions (separate flow).
+func get_gigs_for_phase(phase: int) -> Array:
+	var gigs: Array = []
+	var rep = GameManager.reputation
+	
+	for event in _all_events:
+		var event_phase = event.get("phase", 1)
+		var req_rep = event.get("reputationRequired", 0)
+		var event_type = event.get("type", "gig")
+		
+		if event_phase == phase and rep >= req_rep and event_type in ["gig", "challenge", "competition"]:
+			# Don't show milestone events in gig list
+			if event_type != "milestone":
+				gigs.append(event)
+	
+	return gigs
+
+## Selects a gig by ID and sets it as the current active event
+func select_gig(event_id: String) -> bool:
+	for event in _all_events:
+		if event["id"] == event_id:
+			current_event = event
+			emit_signal("event_started", event_id, event)
+			return true
+	return false
 
 func start_event(event_id: String) -> bool:
 	for event in _all_events:

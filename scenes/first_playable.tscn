@@ -767,12 +767,18 @@ alignment = 1
 
 [node name="RestartBtn" type="Button" parent="ResultsPanel/MarginContainer/VBox/ActionRow"]
 layout_mode = 2
-custom_minimum_size = Vector2(200, 44)
+custom_minimum_size = Vector2(160, 44)
+theme_override_font_sizes/font_size = 16
+text = "🔥 Practice Again"
+
+[node name="ContinueBtn" type="Button" parent="ResultsPanel/MarginContainer/VBox/ActionRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(240, 44)
 theme_override_font_sizes/font_size = 18
-text = "🔥 Cook Again"
+text = "⏩ Continue to Day Summary"
 
 [node name="QuitBtn" type="Button" parent="ResultsPanel/MarginContainer/VBox/ActionRow"]
 layout_mode = 2
-custom_minimum_size = Vector2(150, 44)
-theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(140, 44)
+theme_override_font_sizes/font_size = 16
 text = "Quit"

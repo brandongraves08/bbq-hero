@@ -91,3 +91,47 @@ func get_reputation_for_phase(phase: int) -> float:
 			return 500.0
 		_:
 			return 99999.0
+
+## ── Cook Result Processing ──────────────────────────────────────────────────
+## Called after a cook completes to award reputation and track satisfaction.
+## Returns a Dictionary with reputation details for the day summary UI.
+func process_cook_result(cook_score: float, event_data: Dictionary) -> Dictionary:
+	var result: Dictionary = {}
+
+	# Base reputation: score / 10, so a perfect 100 = +10 rep
+	var base_rep: float = cook_score / 10.0
+
+	# Event difficulty multiplier
+	var difficulty: int = event_data.get("difficulty", 1)
+	var diff_mult: float = 0.8 + (difficulty - 1) * 0.15  # 0.8x to 1.4x
+	var rep_gain: float = round(base_rep * diff_mult * 10.0) / 10.0
+
+	# Customer count satisfaction bonus
+	var customer_range: Array = event_data.get("customerCountRange", [10, 30])
+	var avg_customers: float = (customer_range[0] + customer_range[1]) / 2.0
+	var satisfaction: float = cook_score / 100.0
+	record_customer_satisfaction(satisfaction)
+
+	# Bonus for high scores (>70)
+	var bonus_rep: float = 0.0
+	if cook_score >= 70:
+		bonus_rep += 2.0
+	if cook_score >= 85:
+		bonus_rep += 3.0
+	if cook_score >= 95:
+		bonus_rep += 5.0
+
+	var total_rep_gain: float = rep_gain + bonus_rep
+	add_reputation(total_rep_gain)
+
+	result["base_rep"] = base_rep
+	result["difficulty_multiplier"] = diff_mult
+	result["rep_gain"] = rep_gain
+	result["bonus_rep"] = bonus_rep
+	result["total_rep_gained"] = total_rep_gain
+	result["satisfaction"] = satisfaction
+	result["customers_served"] = int(avg_customers)
+	result["new_fame_level"] = get_fame_level()
+
+	EventBus.emit("reputation_processed", result)
+	return result

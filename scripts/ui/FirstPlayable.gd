@@ -107,7 +107,12 @@ var _selected_weight: float = 7.0
 @onready var results_time_label: Label = $ResultsPanel/MarginContainer/VBox/Breakdown/TimeValue
 @onready var results_feedback_label: Label = $ResultsPanel/MarginContainer/VBox/FeedbackLabel
 @onready var results_restart_btn: Button = $ResultsPanel/MarginContainer/VBox/ActionRow/RestartBtn
+@onready var results_continue_btn: Button = $ResultsPanel/MarginContainer/VBox/ActionRow/ContinueBtn
 @onready var results_quit_btn: Button = $ResultsPanel/MarginContainer/VBox/ActionRow/QuitBtn
+
+## Economy/reputation results stored for day_summary
+var _economy_result: Dictionary = {}
+var _reputation_result: Dictionary = {}
 
 ## ── Event tracking ────────────────────────────────────────────────────────────
 var _cook_start_time: float = 0.0
@@ -118,6 +123,7 @@ var _rest_duration: float = 0.0
 var _meat_loaded: bool = false
 var _fire_lit: bool = false
 var _done_pulled: bool = false
+var _cook_score: float = 0.0
 
 ## ── Kenney texture caches ─────────────────────────────────────────────────────
 var _tex_panel_brown: Texture2D = preload("res://assets/ui/kenney-adventure/PNG/Default/panel_brown.png")
@@ -929,6 +935,7 @@ func _show_results() -> void:
 
 	# Compute weighted score for display
 	var final_score = clamp(raw_score, 0.0, 100.0)
+	_cook_score = final_score
 
 	var grade = _get_grade_text(final_score)
 	var grade_icon = _get_grade_icon(final_score)
@@ -948,8 +955,37 @@ func _show_results() -> void:
 	var feedback = _get_feedback(final_score, bark, ring, moisture, temp_accuracy)
 	results_feedback_label.text = feedback
 
-	# Buttons
+	# Compute economy and reputation results
+	_economy_result = EconomyManager.process_cook_result(
+		{"weight": _selected_weight, "name": _get_selected_meat_data().get("name", "Brisket")},
+		final_score,
+		GameManager.active_gig if not GameManager.active_gig.is_empty() else {
+			"payoutRange": [50, 150],
+			"difficulty": 1,
+			"customerCountRange": [10, 30]
+		},
+		0.0  # fuel cost simplified for now
+	)
+	_reputation_result = ReputationManager.process_cook_result(
+		final_score,
+		GameManager.active_gig if not GameManager.active_gig.is_empty() else {
+			"name": "Practice Cook",
+			"difficulty": 1,
+			"customerCountRange": [5, 10]
+		}
+	)
+
+	# Store results for day_summary scene
+	var cook_result = {
+		"cook_score": final_score,
+		"economy_result": _economy_result,
+		"reputation_result": _reputation_result
+	}
+	GameManager.set_meta("last_cook_result", cook_result)
+
+	# Buttons — wire continue to day summary
 	results_restart_btn.pressed.connect(_on_restart)
+	results_continue_btn.pressed.connect(_on_continue_to_summary)
 	results_quit_btn.pressed.connect(_on_quit)
 
 
@@ -986,6 +1022,26 @@ func _get_feedback(score: float, bark: float, ring: float, moisture: float, temp
 		lines.append("💡 Tip: Pulling at the right temp is critical. Watch your thermometer!")
 
 	return "\n".join(lines)
+
+
+## Transition to day summary after cook completes
+func _on_continue_to_summary() -> void:
+	# Record the cook result as a completed event
+	if not GameManager.active_gig.is_empty():
+		var result_data = {
+			"score": _cook_score,
+			"grade": _get_grade_text(_cook_score),
+			"economy": _economy_result,
+			"reputation": _reputation_result
+		}
+		EventManager.complete_event(result_data)
+	
+	TickManager.pause()
+	_cleanup_systems()
+	
+	# Transition to day summary scene via GameManager
+	GameManager.go_to_day_summary()
+	get_tree().change_scene_to_file("res://scenes/day_summary.tscn")
 
 
 func _on_restart() -> void:
@@ -1040,6 +1096,8 @@ func _on_restart() -> void:
 		results_restart_btn.pressed.disconnect(conn.callable)
 	for conn in results_quit_btn.pressed.get_connections():
 		results_quit_btn.pressed.disconnect(conn.callable)
+	for conn in results_continue_btn.pressed.get_connections():
+		results_continue_btn.pressed.disconnect(conn.callable)
 	# Disconnect EventBus listeners
 	EventBus.off("fire_state_updated", _on_fire_state_updated)
 	EventBus.off("meat_state_updated", _on_meat_state_updated)

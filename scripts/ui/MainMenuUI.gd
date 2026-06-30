@@ -18,11 +18,16 @@ func _ready() -> void:
 
 func _on_new_game() -> void:
 	GameManager.start_new_game()
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	# Initialize EconomyManager and ReputationManager money/rep
+	EconomyManager.money = GameManager.money
+	ReputationManager.reputation = GameManager.reputation
+	get_tree().change_scene_to_file("res://scenes/hub.tscn")
 
 func _on_load_game() -> void:
 	if GameManager.load_game():
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		EconomyManager.money = GameManager.money
+		ReputationManager.reputation = GameManager.reputation
+		get_tree().change_scene_to_file("res://scenes/hub.tscn")
 
 func _on_quit() -> void:
 	GameManager.end_game()
