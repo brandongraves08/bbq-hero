@@ -184,6 +184,12 @@ custom_minimum_size = Vector2(240, 50)
 theme_override_font_sizes/font_size = 20
 text = "🔧 Upgrade Shop"
 
+[node name="PrepStationBtn" type="Button" parent="MarginContainer/VBox/ActionRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(240, 50)
+theme_override_font_sizes/font_size = 18
+text = "🧑‍🍳 Prep Station"
+
 [node name="SaveBtn" type="Button" parent="MarginContainer/VBox/ActionRow"]
 layout_mode = 2
 custom_minimum_size = Vector2(160, 50)

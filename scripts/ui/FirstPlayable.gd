@@ -28,6 +28,9 @@ var _selected_smoker_id: String = "rusty_offset"
 var _selected_meat_id: String = "packer_brisket"
 var _selected_weight: float = 7.0
 
+# Selected recipe to apply
+var _selected_recipe_id: String = ""
+
 ## Multi-meat support: store queued or current mealoads
 var _queued_meats: Array = []  # Array of {meat_id, weight}
 var _loaded_meats: Array = []  # Array of MeatSystem (future multi-meat extension)
@@ -431,6 +434,9 @@ func _populate_setup() -> void:
 	_update_weight_display()
 	setup_weight_slider.value_changed.connect(_on_setup_weight_changed)
 	setup_begin_btn.pressed.connect(_on_setup_begin)
+	
+	# Build recipe selection if player has unlocked recipes
+	_build_recipe_selection()
 
 
 func _populate_smoker_buttons() -> void:
@@ -568,6 +574,87 @@ func _update_weight_display() -> void:
 	setup_weight_label.text = "Weight: %.1f kg" % _selected_weight
 
 
+func _build_recipe_selection() -> void:
+	# Remove old recipe section if it exists
+	var old_section = setup_panel.get_node_or_null("RecipeSection")
+	if old_section:
+		old_section.queue_free()
+	
+	var unlocked = RecipeManager.get_unlocked_recipes()
+	if unlocked.is_empty():
+		return
+	
+	# Create recipe section container
+	var recipe_section = VBoxContainer.new()
+	recipe_section.name = "RecipeSection"
+	recipe_section.add_theme_constant_override("separation", 6)
+	
+	var recipe_label = Label.new()
+	recipe_label.text = "🧂 Seasoning (optional)"
+	recipe_label.theme_override_font_sizes["font_size"] = 16
+	recipe_label.theme_override_colors["font_color"] = Color(1, 0.7, 0.3)
+	recipe_section.add_child(recipe_label)
+	
+	var recipe_hint = Label.new()
+	recipe_hint.text = "Select a rub, brine, or marinade to enhance your cook."
+	recipe_hint.theme_override_font_sizes["font_size"] = 12
+	recipe_hint.theme_override_colors["font_color"] = Color(0.6, 0.5, 0.35)
+	recipe_section.add_child(recipe_hint)
+	
+	# Show recipes that are crafted (in stock) and match the selected meat
+	var crafted = RecipeManager.get_all_crafted()
+	var meat_data = _get_selected_meat_data()
+	var meat_cat = meat_data.get("category", "")
+	
+	for rid in crafted:
+		var recipe = RecipeManager.get_recipe(rid)
+		var best_for = recipe.get("bestForMeats", [])
+		if meat_cat in best_for:
+			var name = recipe.get("name", "Unknown")
+			var count = crafted[rid]
+			var owned_label = "" if count <= 1 else " (x%d)" % count
+			var btn = Button.new()
+			btn.text = "%s%s" % [name, owned_label]
+			btn.custom_minimum_size = Vector2(300, 34)
+			btn.theme_override_font_sizes["font_size"] = 14
+			
+			var rid_param = rid
+			btn.pressed.connect(func():
+				_selected_recipe_id = rid_param
+				# Highlight selected, dim others
+				for child in recipe_section.get_children():
+					if child is Button:
+						child.self_modulate = Color(1, 1, 0.7) if child == btn else Color(0.7, 0.7, 0.7)
+				recipe_hint.text = "✅ %s selected — cook will use this recipe." % name
+			)
+			recipe_section.add_child(btn)
+	
+	# "None" option to deselect
+	var none_btn = Button.new()
+	none_btn.text = "❌ None (no seasoning)"
+	none_btn.custom_minimum_size = Vector2(300, 34)
+	none_btn.theme_override_font_sizes["font_size"] = 12
+	none_btn.pressed.connect(func():
+		_selected_recipe_id = ""
+		for child in recipe_section.get_children():
+			if child is Button:
+				child.self_modulate = Color(0.7, 0.7, 0.7)
+		recipe_hint.text = "Select a rub, brine, or marinade to enhance your cook."
+	)
+	recipe_section.add_child(none_btn)
+	
+	# Insert after weight row, before begin button
+	var setup_vbox = setup_panel.get_node("MarginContainer/VBoxContainer")
+	var begin_btn_idx = -1
+	for i in range(setup_vbox.get_child_count()):
+		if setup_vbox.get_child(i) == setup_begin_btn:
+			begin_btn_idx = i
+			break
+	if begin_btn_idx >= 0:
+		setup_vbox.add_child(recipe_section)
+		setup_vbox.move_child(recipe_section, begin_btn_idx)
+
+
 func _get_selected_meat_data() -> Dictionary:
 	for m in _meats_data:
 		if m.get("id", "") == _selected_meat_id:
@@ -589,6 +676,7 @@ func _on_setup_begin() -> void:
 	_meat_loaded = false
 	_fire_lit = false
 	_done_pulled = false
+	_selected_recipe_id = ""
 	_current_meat_index = 0
 	_loaded_meats.clear()
 	_queued_meats.clear()
@@ -1118,6 +1206,27 @@ func _show_results() -> void:
 	var target_temp = _meat_system.target_internal_temp
 	var temp_accuracy = clamp(100.0 - abs(temp_achieved - target_temp) * 2.0, 0.0, 100.0)
 	var cook_time = _meat_system.cook_time
+
+	# Apply recipe effects if a seasoning was selected
+	if not _selected_recipe_id.is_empty():
+		var effects = RecipeManager.get_recipe_effects(_selected_recipe_id)
+		var bark_bonus = effects.get("bark_bonus", 0.0)
+		var moisture_bonus = effects.get("moisture_bonus", 0.0)
+		var flavor_bonus = effects.get("flavor_bonus", 0.0)
+		var taste_bonus = effects.get("taste_bonus", 0.0)
+		var appearance_bonus = effects.get("appearance_bonus", 0.0)
+		
+		# Apply bonuses to cook metrics
+		bark = clamp(bark + bark_bonus * 100.0, 0.0, 100.0)
+		moisture = clamp(moisture + moisture_bonus * 100.0, 0.0, 100.0)
+		ring = clamp(ring + appearance_bonus * 50.0, 0.0, 100.0)
+		
+		# Bonus to final score based on flavor/taste
+		var score_bonus = (flavor_bonus + taste_bonus) * 25.0
+		raw_score += score_bonus
+		
+		# Consume the recipe
+		RecipeManager.use_recipe(_selected_recipe_id, 1)
 
 	# Compute weighted score for display
 	var final_score = clamp(raw_score, 0.0, 100.0)

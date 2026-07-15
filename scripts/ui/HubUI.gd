@@ -15,6 +15,7 @@ class_name HubUI
 @onready var upgrade_btn: Button = $MarginContainer/VBox/ActionRow/UpgradeBtn
 @onready var save_btn: Button = $MarginContainer/VBox/ActionRow/SaveBtn
 @onready var quit_btn: Button = $MarginContainer/VBox/ActionRow/QuitBtn
+@onready var prep_station_btn: Button = $MarginContainer/VBox/ActionRow/PrepStationBtn
 
 @onready var day_history_container: VBoxContainer = $MarginContainer/VBox/StatsPanel/MarginContainer/VBox/HistoryList
 @onready var event_history_label: Label = $MarginContainer/VBox/StatsPanel/MarginContainer/VBox/HistoryList/EventHistoryLabel
@@ -26,6 +27,7 @@ func _ready() -> void:
 	upgrade_btn.pressed.connect(_on_upgrade)
 	save_btn.pressed.connect(_on_save)
 	quit_btn.pressed.connect(_on_quit)
+	prep_station_btn.pressed.connect(_on_prep_station)
 
 	# Listen for game state changes
 	GameManager.state_changed.connect(_on_game_state_changed)
@@ -84,6 +86,9 @@ func _on_save() -> void:
 	save_btn.text = "✅ Saved!"
 	await get_tree().create_timer(1.5).timeout
 	save_btn.text = "💾 Save Game"
+
+func _on_prep_station() -> void:
+	get_tree().change_scene_to_file("res://scenes/recipe_crafting.tscn")
 
 func _on_quit() -> void:
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
