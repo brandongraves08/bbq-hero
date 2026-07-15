@@ -17,7 +17,7 @@ class_name HubUI
 @onready var quit_btn: Button = $MarginContainer/VBox/ActionRow/QuitBtn
 
 @onready var day_history_container: VBoxContainer = $MarginContainer/VBox/StatsPanel/MarginContainer/VBox/HistoryList
-@onready var event_history_label: Label = $MarginContainer/VBox/StatsPanel/MarginContainer/VBox/EventHistoryLabel
+@onready var event_history_label: Label = $MarginContainer/VBox/StatsPanel/MarginContainer/VBox/HistoryList/EventHistoryLabel
 
 signal gig_selected
 

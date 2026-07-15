@@ -8,8 +8,8 @@ class_name DaySummaryUI
 ## Flow: first_playable (cook ends) → day_summary → hub
 
 @onready var day_label: Label = $MarginContainer/VBox/HeaderRow/DayLabel
-@onready var score_label: Label = $MarginContainer/VBox/ScorePanel/ScoreLabel
-@onready var grade_label: Label = $MarginContainer/VBox/ScorePanel/GradeLabel
+@onready var score_label: Label = $MarginContainer/VBox/ScorePanel/MarginContainer/VBox/ScoreLabel
+@onready var grade_label: Label = $MarginContainer/VBox/ScorePanel/MarginContainer/VBox/GradeLabel
 
 @onready var earnings_panel: Panel = $MarginContainer/VBox/EarningsPanel
 @onready var payout_label: Label = $MarginContainer/VBox/EarningsPanel/MarginContainer/VBox/PayoutLabel
@@ -29,7 +29,7 @@ class_name DaySummaryUI
 @onready var profit_label: Label = $MarginContainer/VBox/ProfitRow/ProfitLabel
 @onready var profit_icon_label: Label = $MarginContainer/VBox/ProfitRow/ProfitIconLabel
 
-@onready var feedback_label: Label = $MarginContainer/VBox/FeedbackPanel/FeedbackLabel
+@onready var feedback_label: Label = $MarginContainer/VBox/FeedbackPanel/MarginContainer/FeedbackLabel
 @onready var continue_btn: Button = $MarginContainer/VBox/FooterRow/ContinueBtn
 
 ## Data from the completed cook cycle

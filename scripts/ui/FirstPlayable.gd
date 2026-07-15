@@ -1,13 +1,15 @@
 extends Control
 class_name FirstPlayable
 
-## ── First Playable: End-to-End Brisket Cook ───────────────────────────────────
-## A polished walkthrough of the full BBQ cook loop:
-##   Setup → Light Fire → Load Meat → Manage → Rest → Score
+## ── First Playable: Full BBQ Cook Loop ───────────────────────────────────────
+## End-to-end cook management supporting ALL meats from meats.json.
+## Integrates CookVisuals, MeatThermometer, and routes to GigScoring for gigs.
+##
+## Setup → Light Fire → Load Meat → Manage → Rest → Score
 ## Uses Kenney Adventure UI PNG assets for themed panels/buttons/progress bars.
 ## Wraps FireSystem, MeatSystem, TickManager, EventBus into guided phases.
 
-enum GamePhase { SETUP, COOKING, RESTING, RESULTS }
+enum GamePhase { SETUP, COOKING, RESTING, RESULTS, GIG_SCORING }
 
 var _phase: int = GamePhase.SETUP
 
@@ -15,12 +17,26 @@ var _phase: int = GamePhase.SETUP
 var _fire_system: FireSystem = null
 var _meat_system: MeatSystem = null
 
+## Visual components (optional — created at runtime)
+var _cook_visuals: CookVisuals = null
+var _thermometer: MeatThermometer = null
+
 ## Data
 var _meats_data: Array = []
 var _smokers_data: Array = []
 var _selected_smoker_id: String = "rusty_offset"
 var _selected_meat_id: String = "packer_brisket"
 var _selected_weight: float = 7.0
+
+## Multi-meat support: store queued or current mealoads
+var _queued_meats: Array = []  # Array of {meat_id, weight}
+var _loaded_meats: Array = []  # Array of MeatSystem (future multi-meat extension)
+var _current_meat_index: int = 0
+
+## Gig/event data from GameManager
+var _active_gig_data: Dictionary = {}
+var _is_competition: bool = false
+var _scoring_type: int = 0  # GigScoring.ScoringType.GIG
 
 ## UI Node Paths (set at runtime for dynamic scene support)
 @onready var setup_panel: Panel = $SetupPanel
@@ -110,6 +126,12 @@ var _selected_weight: float = 7.0
 @onready var results_continue_btn: Button = $ResultsPanel/MarginContainer/VBox/ActionRow/ContinueBtn
 @onready var results_quit_btn: Button = $ResultsPanel/MarginContainer/VBox/ActionRow/QuitBtn
 
+## CookVisuals nodes (optional — created if CookVisuals is present)
+@onready var cook_visuals_container: Control = $CookingPanel/MarginContainer/HBoxContainer/CookVisualsContainer if has_node("CookingPanel/MarginContainer/HBoxContainer/CookVisualsContainer") else null
+
+## Gig Scoring panel (loaded on demand)
+var _gig_scoring_screen: GigScoring = null
+
 ## Economy/reputation results stored for day_summary
 var _economy_result: Dictionary = {}
 var _reputation_result: Dictionary = {}
@@ -149,9 +171,53 @@ var _tex_banner_hanging: Texture2D = preload("res://assets/ui/kenney-adventure/P
 func _ready() -> void:
 	_load_data()
 	_apply_kenney_theme()
+	_load_gig_data()
 	_show_phase(GamePhase.SETUP)
 	_connect_setup_signals()
 	_connect_tick()
+	_setup_visual_components()
+
+
+func _load_gig_data() -> void:
+	# Check if we have an active gig from GameManager
+	var gig = GameManager.active_gig
+	if not gig.is_empty():
+		_active_gig_data = gig
+		_is_competition = gig.get("type") == "competition"
+		_scoring_type = GigScoring.ScoringType.COMPETITION if _is_competition else GigScoring.ScoringType.GIG
+	else:
+		_active_gig_data = {}
+		_is_competition = false
+		_scoring_type = GigScoring.ScoringType.GIG
+
+
+func _setup_visual_components() -> void:
+	# Create CookVisuals as child of root (controls visual overlays)
+	_cook_visuals = CookVisuals.new()
+	add_child(_cook_visuals)
+	_cook_visuals.visible = false
+
+	# Create MeatThermometer widget
+	_thermometer = MeatThermometer.new()
+	_thermometer.custom_minimum_size = Vector2(50, 160)
+	add_child(_thermometer)
+	_thermometer.visible = false
+
+	# Hook up CookVisuals to existing UI bars
+	if _cook_visuals:
+		_cook_visuals.setup_nodes(
+			null,
+			_thermometer,
+			$CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/SmokeRow/SmokeBar,
+			$CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/TempRow/TempBar,
+			$CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/TempRow/TempBar,
+			$CookingPanel/MarginContainer/HBoxContainer/FirePanel/VBox/FuelRow/FuelBar,
+			$CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow/MoistureBar,
+			null,
+			null,
+			$CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow/BarkLabel,
+			$CookingPanel/MarginContainer/HBoxContainer/MeatPanel/VBox/QualityRow/RingLabel
+		)
 
 
 func _exit_tree() -> void:
@@ -339,7 +405,14 @@ func _show_phase(phase: int) -> void:
 # ──────────────────────────────────────────────────────────────────────────────
 
 func _populate_setup() -> void:
-	setup_title_label.text = "🔥 FIRST PLAYABLE: BRISKET COOK\n🏆 Smoke & Fire: BBQ Hero"
+	# Dynamic title based on gig context
+	if not _active_gig_data.is_empty():
+		var gig_name: String = _active_gig_data.get("name", "BBQ Gig")
+		var type_prefix: String = "🏆 " if _is_competition else "🔥 "
+		setup_title_label.text = "%s%s\n🍖 Smoke & Fire: BBQ Hero" % [type_prefix, gig_name]
+	else:
+		setup_title_label.text = "🔥 BBQ HERO COOK\n🍖 Smoke & Fire: BBQ Hero"
+
 	_populate_smoker_buttons()
 	_populate_meat_buttons()
 
@@ -389,14 +462,44 @@ func _populate_meat_buttons() -> void:
 	for child in setup_meat_buttons.get_children():
 		child.queue_free()
 
-	# Filter to beef/brisket options primarily
+	# Determine which meats to show based on gig requirements
+	var gig_meat_types: Array = []
+	var gig_meat_requirements: Array = _active_gig_data.get("meatRequirements", [])
+	for req in gig_meat_requirements:
+		var mt = req.get("meatType", "")
+		if not mt.is_empty() and not mt in gig_meat_types:
+			gig_meat_types.append(mt)
+
+	# Filter meats to show: if gig specifies meat types, filter by them
+	var filtered_meats: Array = []
 	for meat in _meats_data:
+		var category: String = meat.get("category", "")
+		if gig_meat_types.is_empty():
+			filtered_meats.append(meat)
+		elif category in gig_meat_types:
+			filtered_meats.append(meat)
+
+	# If filtering gave nothing, show all (fallback)
+	if filtered_meats.is_empty():
+		filtered_meats = _meats_data.duplicate()
+
+	# Sort: brisket first, then by difficulty
+	filtered_meats.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var cat_a: String = a.get("category", "")
+		var cat_b: String = b.get("category", "")
+		if cat_a == "brisket" and cat_b != "brisket":
+			return true
+		if cat_a != "brisket" and cat_b == "brisket":
+			return false
+		return a.get("difficulty", 5) < b.get("difficulty", 5)
+	)
+
+	for meat in filtered_meats:
 		var meat_id = meat.get("id", "")
 		var meat_name = meat.get("name", "Unknown Meat")
 		var diff = meat.get("difficulty", 1)
 		var stall = meat.get("stallDurationMin", 60)
 
-		# Show brisket first, then other meats
 		var btn = Button.new()
 		var label = "%s  (Difficulty: %d)" % [meat_name, diff]
 		if meat.get("category", "") == "brisket":
@@ -427,17 +530,18 @@ func _populate_meat_buttons() -> void:
 
 	# Select first by default
 	var first_btn = setup_meat_buttons.get_child(0)
-	if first_btn and _meats_data.size() > 0:
-		_selected_meat_id = _meats_data[0].get("id", "packer_brisket")
-		var w = _meats_data[0].get("weightRangeKg", [5.0, 9.0])
+	if first_btn and filtered_meats.size() > 0:
+		var first_meat = filtered_meats[0]
+		_selected_meat_id = first_meat.get("id", "packer_brisket")
+		var w = first_meat.get("weightRangeKg", [5.0, 9.0])
 		setup_weight_slider.min_value = w[0]
 		setup_weight_slider.max_value = w[1]
 		setup_weight_slider.value = (w[0] + w[1]) / 2.0
 		_selected_weight = setup_weight_slider.value
 		_update_weight_display()
 		setup_meat_desc.text = "Category: %s | Stall: %d min | Weight: %.0f-%.0f kg" % [
-			_meats_data[0].get("category", "?"),
-			_meats_data[0].get("stallDurationMin", 60),
+			first_meat.get("category", "?"),
+			first_meat.get("stallDurationMin", 60),
 			w[0], w[1]
 		]
 		_highlight_selected_button(setup_meat_buttons, first_btn)
@@ -478,6 +582,32 @@ func _on_setup_begin() -> void:
 	_meat_loaded = false
 	_fire_lit = false
 	_done_pulled = false
+	_current_meat_index = 0
+	_loaded_meats.clear()
+	_queued_meats.clear()
+
+	# Build multi-meat queue from gig requirements or single selection
+	var gig_requirements: Array = _active_gig_data.get("meatRequirements", [])
+	if not gig_requirements.is_empty():
+		var gig_meat_types: Array = []
+		for req in gig_requirements:
+			var meat_type: String = req.get("meatType", "")
+			var quantity: float = req.get("quantityKg", 2.0)
+			# Find the first meat matching this type
+			var found: bool = false
+			for m in _meats_data:
+				if m.get("category", "") == meat_type and not (meat_type in gig_meat_types):
+					gig_meat_types.append(meat_type)
+					_queued_meats.append({"meat_id": m.get("id", "packer_brisket"), "weight": quantity})
+					found = true
+					break
+			if not found and not (meat_type in gig_meat_types):
+				gig_meat_types.append(meat_type)
+				# Use _selected_meat_id as fallback
+				_queued_meats.append({"meat_id": "packer_brisket", "weight": quantity})
+	else:
+		# Single meat from setup selection
+		_queued_meats.append({"meat_id": _selected_meat_id, "weight": _selected_weight})
 
 	# Create fire system
 	_fire_system = FireSystem.new()
@@ -485,7 +615,7 @@ func _on_setup_begin() -> void:
 	_fire_system.configure(cooker_data)
 	add_child(_fire_system)
 
-	# Create meat system
+	# Create meat system for first meat
 	_meat_system = MeatSystem.new()
 	_meat_system.fire_system = _fire_system
 	add_child(_meat_system)
@@ -499,6 +629,12 @@ func _on_setup_begin() -> void:
 	# Show cooking phase
 	_show_phase(GamePhase.COOKING)
 	setup_panel.visible = false
+
+	# Make visual components visible
+	if _cook_visuals:
+		_cook_visuals.visible = true
+	if _thermometer:
+		_thermometer.visible = true
 
 	# Start the simulation unpaused
 	TickManager.unpause()
@@ -547,11 +683,23 @@ func _configure_cooking_ui() -> void:
 	fire_target_spin.value = (tr.get("min", 90) + tr.get("max", 160)) / 2.0
 	fire_light_btn.disabled = false
 
+	# Determine current meat in the queue
+	var meat_name: String = "Meat"
+	var meat_weight: float = _selected_weight
+	var ideal_temp: float = 95.0
+	if _current_meat_index < _queued_meats.size():
+		var qm = _queued_meats[_current_meat_index]
+		for m in _meats_data:
+			if m.get("id", "") == qm.get("meat_id", "packer_brisket"):
+				meat_name = m.get("name", "Meat")
+				meat_weight = qm.get("weight", _selected_weight)
+				ideal_temp = m.get("idealInternalTempC", 95)
+				break
+
 	# Configure meat panel
-	var meat_data = _get_selected_meat_data()
-	meat_header_label.text = "🥩 %s  (%.1f kg)" % [meat_data.get("name", "Brisket"), _selected_weight]
+	meat_header_label.text = "🥩 %s  (%.1f kg)" % [meat_name, meat_weight]
 	meat_status_label.text = "🔥 Light the fire first, then load the meat!"
-	meat_target_label.text = "Target: %.0f°C" % meat_data.get("idealInternalTempC", 95)
+	meat_target_label.text = "Target: %.0f°C" % ideal_temp
 
 	# Buttons start disabled
 	meat_load_btn.disabled = true
@@ -682,7 +830,16 @@ func _on_fire_state_updated(data: Dictionary) -> void:
 func _on_load_meat() -> void:
 	if not _fire_system or not _meat_system:
 		return
-	_meat_system.load_meat(_selected_meat_id, _selected_weight)
+	var meat_id := _selected_meat_id
+	var meat_weight := _selected_weight
+	if _current_meat_index < _queued_meats.size():
+		var queued_meat: Dictionary = _queued_meats[_current_meat_index]
+		meat_id = queued_meat.get("meat_id", _selected_meat_id)
+		meat_weight = queued_meat.get("weight", _selected_weight)
+		_selected_meat_id = meat_id
+		_selected_weight = meat_weight
+
+	_meat_system.load_meat(meat_id, meat_weight)
 	_meat_loaded = true
 	meat_load_btn.disabled = true
 	meat_status_label.text = "✅ Meat loaded! Managing the cook..."
@@ -975,11 +1132,20 @@ func _show_results() -> void:
 		}
 	)
 
-	# Store results for day_summary scene
+	# Store results for day_summary / gig_scoring scene
+	var active_gig_dict = GameManager.active_gig if not GameManager.active_gig.is_empty() else {}
 	var cook_result = {
 		"cook_score": final_score,
 		"economy_result": _economy_result,
-		"reputation_result": _reputation_result
+		"reputation_result": _reputation_result,
+		"scoring_type": _scoring_type,
+		"event_data": active_gig_dict,
+		"meat_name": _get_selected_meat_data().get("name", "Brisket"),
+		"meat_weight": _selected_weight,
+		"bark": bark / 100.0,
+		"ring": ring / 100.0,
+		"moisture": moisture / 100.0,
+		"temp_accuracy": temp_accuracy
 	}
 	GameManager.set_meta("last_cook_result", cook_result)
 
@@ -1039,9 +1205,12 @@ func _on_continue_to_summary() -> void:
 	TickManager.pause()
 	_cleanup_systems()
 	
-	# Transition to day summary scene via GameManager
-	GameManager.go_to_day_summary()
-	get_tree().change_scene_to_file("res://scenes/day_summary.tscn")
+	# Transition: show GigScoring scene if there's an active gig, else day summary
+	if not GameManager.active_gig.is_empty():
+		get_tree().change_scene_to_file("res://scenes/gig_scoring.tscn")
+	else:
+		GameManager.go_to_day_summary()
+		get_tree().change_scene_to_file("res://scenes/day_summary.tscn")
 
 
 func _on_restart() -> void:

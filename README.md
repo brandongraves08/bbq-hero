@@ -160,6 +160,29 @@ bbq-hero/
 
 ---
 
+## Current Playable State
+
+As of 2026-07-15, the MVP has an end-to-end Act 1 loop:
+
+```text
+main menu -> hub -> gig select -> cook -> gig scoring/day summary -> hub
+```
+
+What works:
+- Fire management: vents, fuel, wood, water pan, smoke quality, temperature trend
+- Meat simulation: all meats from `data/meats.json` can be selected/cooked, with internal temp, stall, bark, smoke ring, moisture, and rest
+- Gig flow: events from `data/events.json`, active gig context, economy payout, reputation gain, event history
+- Visual feedback: fire/flame visualization, smoke and fuel indicators, thermometer widget, meat progress labels
+- Scoring: KCBS-style competition scoring and gig/customer satisfaction scoring
+- Progression shell: hub, save/load, upgrade shop, phase/reputation tracking
+
+Known next work:
+- Add placeholder audio for fire crackle, sizzle, and ambient yard sound
+- Add true multi-item cook sequencing for gigs that require several meat categories
+- Run in Godot 4 locally; this server does not currently have a Godot binary for headless validation
+
+---
+
 ## Phase 1 — MVP (Act 1 Backyard Only)
 
 **Scope:**
@@ -172,15 +195,15 @@ bbq-hero/
 
 **Milestones:**
 1. ✅ Project scaffold + data definitions
-2. ⬜ Fire simulation (temp curve, fuel burn, vent mechanics)
-3. ⬜ Meat cook simulation (internal temp, stall, bark)
+2. ✅ Fire simulation (temp curve, fuel burn, vent mechanics)
+3. ✅ Meat cook simulation (internal temp, stall, bark)
 4. ⬜ Recipe system (rub blending, sauce making)
-5. ⬜ Economy + inventory + shop
-6. ⬜ Gigs (generated events, difficulty, payout)
-7. ⬜ Competition system (KCBS scoring)
-8. ⬜ UI: Smoker panel, inventory, competition screen, day summary
+5. ✅ Economy + inventory + shop
+6. ✅ Gigs (events, difficulty, payout)
+7. ✅ Competition system (KCBS scoring)
+8. ✅ UI: smoker panel, gig scoring, day summary
 9. ⬜ Progression: upgrades + skill tree (Act 1 scope)
-10. ⬜ Polish: save/load, sound, tutorials
+10. ⬜ Polish: sound, tutorials, local Godot QA
 
 ---
 
