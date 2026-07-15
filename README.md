@@ -177,9 +177,10 @@ What works:
 - Progression shell: hub, save/load, upgrade shop, phase/reputation tracking
 
 Known next work:
-- Add placeholder audio for fire crackle, sizzle, and ambient yard sound
-- Add true multi-item cook sequencing for gigs that require several meat categories
-- Run in Godot 4 locally; this server does not currently have a Godot binary for headless validation
+- Implement recipe system (rub blending, sauce making)
+- Implement upgrade shop + skill tree (Act 1 progression)
+- Run in Godot 4 locally for full playtest (no Godot binary on this server)
+- Replace placeholder audio with real assets before release
 
 ---
 
@@ -203,7 +204,12 @@ Known next work:
 7. ✅ Competition system (KCBS scoring)
 8. ✅ UI: smoker panel, gig scoring, day summary
 9. ⬜ Progression: upgrades + skill tree (Act 1 scope)
-10. ⬜ Polish: sound, tutorials, local Godot QA
+10. ⬜ Polish: tutorials, local Godot QA
+
+**Recent additions (2026-07-15):**
+- 🥩 **Multi-meat cook sequencing** — Gigs with multiple meat requirements (e.g. Neighborhood Cookout: pork + chicken) now properly sequence through each meat. Fire stays lit between meats. Combined score averaged across all meats.
+- 🔊 **Placeholder audio** — Procedurally generated ambient hum, fire crackle, sizzle, meat done chime, and UI success sounds via AudioManager autoload. No external audio files needed.
+- 🔄 **Restart loop fixed** — Cooking panel signals properly reconnect after restart.
 
 ---
 

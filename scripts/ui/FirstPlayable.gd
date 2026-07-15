@@ -33,6 +33,13 @@ var _queued_meats: Array = []  # Array of {meat_id, weight}
 var _loaded_meats: Array = []  # Array of MeatSystem (future multi-meat extension)
 var _current_meat_index: int = 0
 
+## Multi-meat sequencing
+var _total_meat_count: int = 0
+var _multi_meat_active: bool = false
+var _meat_score_results: Array = []  # Array of result dicts, one per meat
+var _meat_scores_by_id: Dictionary = {}
+var _cooking_signals_connected: bool = false
+
 ## Gig/event data from GameManager
 var _active_gig_data: Dictionary = {}
 var _is_competition: bool = false
@@ -585,6 +592,8 @@ func _on_setup_begin() -> void:
 	_current_meat_index = 0
 	_loaded_meats.clear()
 	_queued_meats.clear()
+	_meat_score_results.clear()
+	_meat_scores_by_id.clear()
 
 	# Build multi-meat queue from gig requirements or single selection
 	var gig_requirements: Array = _active_gig_data.get("meatRequirements", [])
@@ -636,8 +645,21 @@ func _on_setup_begin() -> void:
 	if _thermometer:
 		_thermometer.visible = true
 
+	# Multi-meat tracking
+	_total_meat_count = _queued_meats.size()
+	_multi_meat_active = _total_meat_count > 1
+	
+	# Connect cooking signals once
+	if not _cooking_signals_connected:
+		_connect_cooking_signals()
+		_cooking_signals_connected = true
+	
 	# Start the simulation unpaused
 	TickManager.unpause()
+	
+	# Start ambient audio
+	if AudioManager:
+		AudioManager.play_ambient()
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -654,8 +676,8 @@ func _connect_cooking_events() -> void:
 	EventBus.on("fire_out", _on_fire_out)
 
 
-func _configure_cooking_ui() -> void:
-	# Fire controls
+func _connect_cooking_signals() -> void:
+	"""Connect cooking panel signals once to avoid duplicates."""
 	fire_intake_slider.value_changed.connect(_on_intake_changed)
 	fire_exhaust_slider.value_changed.connect(_on_exhaust_changed)
 	fire_target_spin.value_changed.connect(_on_target_changed)
@@ -663,18 +685,17 @@ func _configure_cooking_ui() -> void:
 	fire_fuel_btn.pressed.connect(_on_add_fuel)
 	fire_wood_btn.pressed.connect(_on_add_wood)
 	fire_water_btn.pressed.connect(_on_add_water)
-
-	# Meat controls
 	meat_load_btn.pressed.connect(_on_load_meat)
 	meat_wrap_btn.pressed.connect(_on_wrap_meat)
 	meat_unwrap_btn.pressed.connect(_on_unwrap_meat)
-
-	# Speed controls
 	speed_1x_btn.pressed.connect(func(): TickManager.set_speed(1.0))
 	speed_2x_btn.pressed.connect(func(): TickManager.set_speed(2.0))
 	speed_5x_btn.pressed.connect(func(): TickManager.set_speed(5.0))
 	speed_10x_btn.pressed.connect(func(): TickManager.set_speed(10.0))
 
+
+func _configure_cooking_ui() -> void:
+	"""Update cooking panel UI state for current meat. Signals are connected once in _connect_cooking_signals()."""
 	# Configure fire UI
 	var cooker = _get_selected_smoker_data()
 	var tr = cooker.get("tempRangeC", {"min": 90, "max": 160})
@@ -745,6 +766,8 @@ func _on_fire_lit(_data: Dictionary) -> void:
 	if not fire_light_btn.disabled:
 		fire_light_btn.disabled = true
 		meat_load_btn.disabled = false
+	if AudioManager:
+		AudioManager.play_fire_crackle()
 
 
 func _on_fire_out(_data: Dictionary) -> void:
@@ -830,6 +853,9 @@ func _on_fire_state_updated(data: Dictionary) -> void:
 func _on_load_meat() -> void:
 	if not _fire_system or not _meat_system:
 		return
+	# Sizzle sound when meat hits the smoker
+	if AudioManager:
+		AudioManager.play_sizzle()
 	var meat_id := _selected_meat_id
 	var meat_weight := _selected_weight
 	if _current_meat_index < _queued_meats.size():
@@ -954,6 +980,9 @@ func _on_meat_done(_data: Dictionary) -> void:
 	meat_status_label.text = "🎯 Target internal temp reached! Let the meat rest."
 	meat_wrap_btn.disabled = true
 	meat_unwrap_btn.disabled = true
+	# Play meat done chime
+	if AudioManager:
+		AudioManager.play_meat_done()
 	# Show "rest" option
 	EventBus.emit("meat_ready_to_rest", {})
 
@@ -1149,10 +1178,44 @@ func _show_results() -> void:
 	}
 	GameManager.set_meta("last_cook_result", cook_result)
 
-	# Buttons — wire continue to day summary
+	# Buttons — wire continue to day summary (disconnect first for multi-meat replay safety)
+	if results_restart_btn.pressed.is_connected(_on_restart):
+		results_restart_btn.pressed.disconnect(_on_restart)
+	if results_continue_btn.pressed.is_connected(_on_continue_to_summary):
+		results_continue_btn.pressed.disconnect(_on_continue_to_summary)
+	if results_quit_btn.pressed.is_connected(_on_quit):
+		results_quit_btn.pressed.disconnect(_on_quit)
 	results_restart_btn.pressed.connect(_on_restart)
 	results_continue_btn.pressed.connect(_on_continue_to_summary)
 	results_quit_btn.pressed.connect(_on_quit)
+	
+	# Store per-meat score for multi-meat sequencing
+	var _meat_name_for_result = _get_selected_meat_data().get("name", "Meat")
+	_meat_scores_by_id[_selected_meat_id] = final_score
+	_meat_score_results.append({
+		"meat_id": _selected_meat_id,
+		"meat_name": _meat_name_for_result,
+		"meat_index": _current_meat_index,
+		"cook_score": final_score,
+		"grade": grade,
+		"icon": grade_icon,
+		"economy": _economy_result.duplicate(),
+		"reputation": _reputation_result.duplicate()
+	})
+	
+	# Show multi-meat progress
+	if _multi_meat_active:
+		var remaining = _total_meat_count - (_current_meat_index + 1)
+		var prog_text = "🔥 Meat %d of %d done" % [_current_meat_index + 1, _total_meat_count]
+		if remaining > 0:
+			prog_text += "\n%d more to cook!" % [remaining]
+			results_continue_btn.text = "➜ Next Meat"
+		else:
+			results_continue_btn.text = "✅ Finish Gig"
+	
+	# Play results sound
+	if AudioManager:
+		AudioManager.play_ui_success()
 
 
 func _get_grade_text(score: float) -> String:
@@ -1190,17 +1253,39 @@ func _get_feedback(score: float, bark: float, ring: float, moisture: float, temp
 	return "\n".join(lines)
 
 
-## Transition to day summary after cook completes
+## Transition — either advance to next meat or finish gig
 func _on_continue_to_summary() -> void:
-	# Record the cook result as a completed event
+	# If more meats remain in the multi-meat queue, advance to next
+	if _current_meat_index < _queued_meats.size() - 1:
+		_advance_to_next_meat()
+		return
+	
+	# All meats done — record the gig and transition
+	var combined_score = 0.0
+	if not _meat_score_results.is_empty():
+		for r in _meat_score_results:
+			combined_score += r.get("cook_score", 0.0)
+		combined_score /= _meat_score_results.size()
+	else:
+		combined_score = _cook_score
+	
 	if not GameManager.active_gig.is_empty():
 		var result_data = {
-			"score": _cook_score,
-			"grade": _get_grade_text(_cook_score),
+			"score": combined_score,
+			"grade": _get_grade_text(combined_score),
 			"economy": _economy_result,
-			"reputation": _reputation_result
+			"reputation": _reputation_result,
+			"multi_meat_results": _meat_score_results.duplicate(),
+			"total_meats": _total_meat_count
 		}
 		EventManager.complete_event(result_data)
+	
+	# Update last_cook_result with combined gig data so summary scenes show the right info
+	var combined_result = GameManager.get_meta("last_cook_result", {}).duplicate()
+	combined_result["cook_score"] = combined_score
+	combined_result["multi_meat_results"] = _meat_score_results.duplicate()
+	combined_result["total_meats"] = _total_meat_count
+	GameManager.set_meta("last_cook_result", combined_result)
 	
 	TickManager.pause()
 	_cleanup_systems()
@@ -1211,6 +1296,103 @@ func _on_continue_to_summary() -> void:
 	else:
 		GameManager.go_to_day_summary()
 		get_tree().change_scene_to_file("res://scenes/day_summary.tscn")
+
+
+## Advance to next meat in the multi-meat queue
+func _advance_to_next_meat() -> void:
+	"""Replace meat system with next queued meat, keeping fire going."""
+	_current_meat_index += 1
+	
+	# Clean up old meat system
+	if _meat_system and is_instance_valid(_meat_system):
+		_meat_system.queue_free()
+	
+	# Create new meat system for the next meat
+	_meat_system = MeatSystem.new()
+	_meat_system.fire_system = _fire_system
+	add_child(_meat_system)
+	
+	# Reset meat state
+	_meat_loaded = false
+	_done_pulled = false
+	_cook_score = 0.0
+	
+	# Update selected meat from queue
+	var meat_name = "Meat"
+	var meat_weight = 1.0
+	var ideal_temp = 95.0
+	if _current_meat_index < _queued_meats.size():
+		var qm = _queued_meats[_current_meat_index]
+		_selected_meat_id = qm.get("meat_id", _selected_meat_id)
+		_selected_weight = qm.get("weight", _selected_weight)
+		for m in _meats_data:
+			if m.get("id", "") == _selected_meat_id:
+				meat_name = m.get("name", "Meat")
+				meat_weight = qm.get("weight", _selected_weight)
+				ideal_temp = m.get("idealInternalTempC", 95)
+				break
+	
+	# Update meat panel UI
+	var prog_txt = " (%d of %d)" % [_current_meat_index + 1, _total_meat_count]
+	meat_header_label.text = "🥩 %s%s  (%.1f kg)" % [meat_name, prog_txt, meat_weight]
+	meat_status_label.text = "🔥 Fire still going! Load the next meat."
+	meat_target_label.text = "Target: %.0f°C" % ideal_temp
+	
+	# Reset meat control buttons
+	meat_load_btn.disabled = false
+	meat_load_btn.text = "Load Meat"
+	meat_wrap_btn.disabled = true
+	meat_wrap_btn.text = "📦 Wrap (Paper)"
+	meat_unwrap_btn.disabled = true
+	meat_unwrap_btn.text = "📄 Unwrap"
+	
+	# Restore unwrap button from quick-rest if needed
+	if meat_unwrap_btn.pressed.is_connected(_on_quick_rest):
+		meat_unwrap_btn.pressed.disconnect(_on_quick_rest)
+		meat_unwrap_btn.pressed.connect(_on_unwrap_meat)
+	
+	# Hide quality bars until meat is loaded
+	meat_bark_bar.visible = false
+	meat_bark_label.visible = false
+	meat_ring_bar.visible = false
+	meat_ring_label.visible = false
+	meat_moisture_bar.visible = false
+	meat_moisture_label.visible = false
+	meat_stall_label.visible = false
+	meat_stall_bar.visible = false
+	
+	# Reset temp/cook time display
+	meat_temp_bar.value = 0
+	meat_temp_label.text = "—°C"
+	meat_cook_time.text = "⏱ 0h 00m"
+	
+	# Show cooking phase
+	_show_phase(GamePhase.COOKING)
+	cooking_panel.visible = true
+	resting_panel.visible = false
+	results_panel.visible = false
+	
+	# Make visual components visible
+	if _cook_visuals:
+		_cook_visuals.visible = true
+	if _thermometer:
+		_thermometer.visible = true
+	
+	# Fire stays lit between meats — no need to relight
+	if _fire_system and _fire_system.is_lit:
+		fire_status_label.text = "🔥 Fire still active! Add fuel as needed."
+		meat_load_btn.disabled = false
+	else:
+		fire_status_label.text = "❄️ Fire went out — relight it!"
+		meat_load_btn.disabled = true
+		fire_light_btn.disabled = false
+	
+	# Start ambient audio for the next cook
+	if AudioManager:
+		AudioManager.play_ambient()
+	
+	# Ensure simulation is running
+	TickManager.unpause()
 
 
 func _on_restart() -> void:
@@ -1275,6 +1457,9 @@ func _on_restart() -> void:
 	EventBus.off("meat_target_temp_reached", _on_meat_done)
 	EventBus.off("fire_lit", _on_fire_lit)
 	EventBus.off("fire_out", _on_fire_out)
+	
+	# Reset cooking signal flag so next run reconnects
+	_cooking_signals_connected = false
 
 	# Reset fire
 	fire_light_btn.disabled = false
