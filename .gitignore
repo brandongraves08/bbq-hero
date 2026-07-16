@@ -1,2 +1,11 @@
 export_presets.cfg
 web-build/
+
+# Godot project-specific
+.godot/
+*.import
+*.uid
+*.remap
+*.dotnet
+export_presets.cfg
+web-build/
